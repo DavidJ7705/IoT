@@ -39,7 +39,24 @@ void loop() {
  Serial.print(distance);
  Serial.println(" cm");
 
- if(distance <20){
+ if(distance<100 && distance > 50){
+  digitalWrite(buzzer,HIGH);
+  digitalWrite(LED,HIGH);
+  delay(600);
+  digitalWrite(buzzer,LOW);
+  digitalWrite(LED,LOW);
+  delay(100);
+ }
+ 
+ else if(distance<35 && distance > 20){
+  digitalWrite(buzzer,HIGH);
+  digitalWrite(LED,HIGH);
+  delay(30);
+  digitalWrite(buzzer,LOW);
+  digitalWrite(LED,LOW);
+  delay(50);
+  }
+ else if(distance <20){
   digitalWrite(buzzer,HIGH);
   digitalWrite(LED,HIGH);
  } 
@@ -49,7 +66,14 @@ void loop() {
  }
  
  // Wait for a short time before taking the next measurement
- delay(550);
+ delay(450);
+}
+
+void testBuzzer(){
+  tone(buzzer, 1000, 2000);
+  delay(2000);
+  tone(buzzer, 100, 2000);
+  delay(2000);
 }
 
 void testLED(){
