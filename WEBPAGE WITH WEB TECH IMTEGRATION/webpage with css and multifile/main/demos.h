@@ -1,10 +1,10 @@
-const char htmlDHT11_2[] PROGMEM = R"=====(
+const char htmlDemos[] PROGMEM = R"=====(
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello from HTTP Server ESP8266 - Page2</title>
+    <title>DEMOS PAGE FOR SERVER</title>
     <style>
      
  
@@ -120,14 +120,6 @@ text-align: center;
   background-color: rgb(157, 199, 224);
   float:right;
   border-radius: 10px;
-}
-
-#main2{
-  width:100%;
-  min-height:300px;
-  background-color: rgb(255, 255, 255);
-  margin-bottom: 10px;
-  border: 10px solid rgb(255, 255, 255);
 }
 
 #side-div2{
@@ -312,24 +304,32 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 </head>
 
 <body>
-<div class="flex-Container">
- <div class="header"></div>
- <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
-  <label for="openSidebarMenu" class="sidebarIconToggle">
-    <div class="spinner diagonal part-1"></div>
-    <div class="spinner horizontal"></div>
+  <div class="flex-Container">
+      <div class="header"></div>
+      <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+      <label for="openSidebarMenu" class="sidebarIconToggle">
+      <div class="spinner diagonal part-1"></div>
+      <div class="spinner horizontal"></div>
     <div class="spinner diagonal part-2"></div>
   </label>
 
   <div id="sidebarMenu">
     <ul class="sidebarMenuInner">
-      <li><a href="/about_2" role="button">About Us</a></li>
-      <li><a href="/" role="button">Demos</a></li>
-      <li>Features<span><a href="/dht11_2" role="button">dht 11</a></span> <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
+      <li><a href="/" role="button">ABOUT</a></li>
+      <li><a href="/demos" role="button">DEMOS</a></li>
+      <li><a href="/features" role="button">FEATURES</a>
+      <span><a href="/dht11" role="button">DHT11</a></span>
+      <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
     </ul>
   </div>
-  <br/><br/><br/><br/><br/><br/><br/>
-  <div id="footer-div">© 2022 Meta</div>
+
+  <br/><br/><br/><br/>
+  <h1> DEMOS PAGE</h1>
+  
+  <p>Hello! this is a test for webpage window demos, has sidebar with access to other pages</p>
+
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+<div id="footer-div">© DEMOS </div>
 </body>
 
 </html>

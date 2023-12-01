@@ -6,9 +6,10 @@
 DFRobot_DHT11 DHT;
 #define DHT11_PIN 18
 
-#include "dht11_2.h"
-#include "homepage_exp_2.h"
-#include "about_2.h"
+#include "about.h"
+#include "demos.h"
+#include "features.h"
+#include "dht11.h"
 
 const char* ssid = "LaPhone";
 const char* password = "password";
@@ -29,15 +30,19 @@ String getHumi(){
  
 void handleRoot() {
 Serial.println("GET /");
-  server.send(200, "text/html", htmlHomePage_2);
+  server.send(200, "text/html", htmlAbout);
 }
- void handleDHT11_2() {
-Serial.println("GET /dht11_2");
-  server.send(200, "text/html", htmlDHT11_2);
+ void handleDemos() {
+Serial.println("GET /demos");
+  server.send(200, "text/html", htmlDemos);
 }
-void handleAbout_2() {
-Serial.println("GET /about_2");
-  server.send(200, "text/html", htmlAbout_2);
+void handleFeatures() {
+Serial.println("GET /features");
+  server.send(200, "text/html", htmlFeatures);
+}
+void handleDHT11() {
+Serial.println("GET /dht11");
+  server.send(200, "text/html", htmlDHT11);
 }
 
 void handleNotFound() {
@@ -78,8 +83,9 @@ void setup(void) {
   }
  
   server.on("/", handleRoot);
-  server.on("/dht11_2", handleDHT11_2);
-  server.on("/about_2", handleAbout_2);
+  server.on("/demos", handleDemos);
+  server.on("/features", handleFeatures);
+  server.on("/dht11", handleDHT11);
 
   server.on("/inline", []() {
   server.send(200, "text/plain", "this works as well");
