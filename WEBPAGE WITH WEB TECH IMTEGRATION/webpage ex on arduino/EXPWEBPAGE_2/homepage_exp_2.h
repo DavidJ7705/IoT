@@ -11,36 +11,29 @@
  
 String homePagePart1 = F(R"=====(<!DOCTYPE html>
  
-<html lang="en" > <!-- Needed for Screenreaders !-->
- 
+<html lang="en" >
 <head>
- 
-<!-- UTF-8 character set covers most characters in the world -->
- 
  <meta charset="utf-8">
  
- <!-- Make page respond to screen size !-->
- 
  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
- 
-  <meta http-equiv="refresh" content="5">
- 
-<!--Include a Title. Used by Search Engines -->
- 
+<meta http-equiv="refresh" content="5">
 <title> Temperature Reading WebServer </title>
- 
+
 <style>
  
  
- 
- <!--choose good contrast between background and foreground colours -->
- 
- body {
- 
-background-color: #CCCCFF;
- 
+ *{
+  margin: 0px;
+  padding: 00px;
+  font-family:Verdana,Tahoma, sans-serif;
 }
- 
+
+html, body {
+  overflow-x: hidden;
+  background-color: #CCCCFF;
+  height: 100%;
+}
+
 .flex-Container{
  
  display: flex;
@@ -87,12 +80,248 @@ text-align: center;
  
  text-align: left;
  
-2
  
  border-bottom: 1px solid #ddd;
  
 }
- 
+.clearfix::after{
+  content:"";
+  display:block;
+  clear:both;
+}
+
+#intro{
+  width:60%;
+  font-family:Verdana,Tahoma, sans-serif;
+  min-height:300px;
+  padding-left: 10px;
+  padding-top: 10px;
+  margin-left: 300px;
+  margin-right: 20px;
+  border-right: 10px whitesmoke;
+  background-color: rgb(226, 232, 236);
+  float:center;
+  border-radius: 10px;
+}
+
+#main{
+  width:100%;
+  min-height:300px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 10px;
+  border: 10px solid rgb(255, 255, 255);
+}
+
+#side-div{
+  width:99.5%;
+  padding-left: 10px;
+  min-height:300px;
+  font-size: 13px;
+  line-height: 50px;
+  text-align:left;
+  background-color: #33475b;
+  border-radius: 10px;
+  color: white;
+  font-family: Avenir;
+  float:left;
+}
+
+#body-div img{
+  width:65%;
+  min-height:300px;
+  margin-right: 20px;
+  border-right: 10px whitesmoke;
+  background-color: rgb(157, 199, 224);
+  float:right;
+  border-radius: 10px;
+}
+
+#main2{
+  width:100%;
+  min-height:300px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 10px;
+  border: 10px solid rgb(255, 255, 255);
+}
+
+#side-div2{
+  width:20%;
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-right: 20px;
+  min-height:300px;
+  font-size: 13px;
+  line-height: 50px;
+  text-align:left;
+  background-color: #33475b;
+  border-radius: 10px;
+  color: white;
+  font-family: Avenir;
+  float:right;
+}
+
+#body-div2 img{
+  width:65%;
+  min-height:300px;
+  margin-right: 10px;
+  border-right: 10px whitesmoke;
+  background-color: rgb(157, 199, 224);
+  float:left;
+  border-radius: 10px;
+}
+
+
+#footer-div{
+
+  width:100%;
+  min-height:50px;
+  line-height:50px;
+  background-color:#173042;
+  text-align:center;
+  font-size:smaller;
+}
+.LandOverview div{
+  vertical-align: middle;
+  font-size: 30px;
+  color:rgb(30, 28, 28);
+  letter-spacing: 1.20px;
+  
+}
+ .header {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: none;
+  background-color: #173042;   /* #FC466B */
+  text-align:center;
+  position: fixed;
+  height: 60px!important;
+  overflow: hidden;
+  z-index: 10;
+}
+.main_body{
+  margin: 0 auto;
+  display: block;
+  height: 100%;
+  margin-top: 60px;
+}
+.mainInner{
+  display: table;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.mainInner div{
+  display:table-cell;
+  vertical-align: middle;
+  font-size: 3em;
+  font-weight: bold;
+  letter-spacing: 1.25px;
+}
+ #sidebarMenu {
+  height: 100%;
+  position: fixed;
+  left: 0;
+  width: 250px;
+  margin-top: 60px;
+  transform: translateX(-250px);
+  transition: transform 250ms ease-in-out;
+  background: linear-gradient(186deg, #173042 32%, #ce7c7c 68%);
+}
+.sidebarMenuInner{
+  margin:0;
+  padding:0;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+.sidebarMenuInner li{
+  list-style: none;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+.sidebarMenuInner li span{
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.50);
+}
+.sidebarMenuInner li a{
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+input[type="checkbox"]:checked ~ #sidebarMenu {
+  transform: translateX(0);
+}
+
+input[type=checkbox] {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  display: none;
+}
+.sidebarIconToggle {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: absolute;
+  z-index: 99;
+  height: 100%;
+  width: 100%;
+  top: 22px;
+  left: 15px;
+  height: 22px;
+  width: 22px;
+}
+.spinner {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background-color: #fff;
+}
+.horizontal {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+}
+.diagonal.part-1 {
+  position: relative;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  float: left;
+}
+.diagonal.part-2 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  opacity: 0;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  transform: rotate(135deg);
+  margin-top: 8px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  transform: rotate(-135deg);
+  margin-top: -9px;
+}
 </style>
  
 </head>
@@ -100,7 +329,7 @@ text-align: center;
 <body>
  
 <div class="flex-Container">
- 
+ </br> </br> </br>
 <h1> Temperature Example Website </h1>
  
  
@@ -144,7 +373,7 @@ String homePagePart2 = F(R"=====(</td>
  
 String homePagePart3 = F(R"=====(</td>
  
- <th>Kg/L</th>
+ <td>Kg/L</td>
  
  </tr>
  
@@ -152,6 +381,25 @@ String homePagePart3 = F(R"=====(</td>
  
  </div>
  
-</body>
+)=====");
+
+
+String sideBar = F(R"=====(<div class="flex-Container">
+ <div class="header"></div>
+ <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+  <label for="openSidebarMenu" class="sidebarIconToggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
+
+  <div id="sidebarMenu">
+    <ul class="sidebarMenuInner">
+      <li>About Us </li>
+      <li>Demos</li>
+      <li>Features<span>DHT11</span> <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
+    </ul>
+  </div>
+  </body>
  
 </html>)=====");

@@ -1,31 +1,12 @@
-// This code is derived from the HelloServer Example
-// in the (ESP32) WebServer library .
-//
-// It hosts a webpage which has one temperature reading to display.
-// The webpage is always the same apart from the reading which would change.
-// The getTemp() function simulates getting a temperature reading.
-// homePage.h contains 2 constant string literals which is the two parts of the
-// webpage that never change.
-// handleRoot() builds up the webpage by adding as a C++ String:
-// homePagePart1 + getTemp() +homePagePart2
-// It then serves the webpage with the command:  
-// server.send(200, "text/html", message);
-// Note the text is served as html.
-//
-// Replace the code in the homepage.h file with your own website HTML code.
-//
-// This example requires only an ESP32 and download cable. No other hardware is reuired.
-// A wifi SSID and password is required.
-// Written by: Natasha Rohan  12/3/23
-//
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
-#include "homepage.h"
+#include "homepage_exp_2.h"
+#include "dht11.h"
 #include <DFRobot_DHT11.h>
 DFRobot_DHT11 DHT;
-#define DHT11_PIN 4
+#define DHT11_PIN 18
  
 const char* ssid = "LaPhone";
 const char* password = "password";
@@ -45,7 +26,7 @@ String getHumi(){
  
  
 void handleRoot() {
-  String message = homePagePart1 + getTemp() + homePagePart2 +getHumi() + homePagePart3;
+  String message =sideBar+ homePagePart1 + getTemp() + homePagePart2 +getHumi() + homePagePart3;
   server.send(200, "text/html", message);
 }
  
