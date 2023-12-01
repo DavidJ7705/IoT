@@ -1,25 +1,23 @@
-// To create literal strings stored in flash memory enclose your HTML code between
+
+<!DOCTYPE html>
  
-// F(R"=====( HTML code here )=====");
+<html lang="en" > 
  
-// If you have 1 reading then you probably have 2 literal strings
- 
-// If you have 2 readings then you probably have 3 literal strings etc.
- 
- 
- 
- 
-String homePagePart1 = F(R"=====(<!DOCTYPE html>
- 
-<html lang="en" >
 <head>
+
+ 
  <meta charset="utf-8">
  
- <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="refresh" content="15">
-<title> Temperature Reading WebServer </title>
-
+ <!-- Make page respond to screen size !-->
+ 
+ <meta name="viewport" content="width=device-width, initial-scale=10, viewport-fit=cover">
+ 
+  <meta http-equiv="refresh" content="10">
+ 
+<title> Motorcycle Safety System Webpage </title>
+ 
 <style>
+ 
  
  
  *{
@@ -322,6 +320,8 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   transform: rotate(-135deg);
   margin-top: -9px;
 }
+
+
 </style>
  
 </head>
@@ -329,13 +329,36 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 <body>
  
 <div class="flex-Container">
- </br> </br> </br>
+ <div class="header"></div>
+ <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+  <label for="openSidebarMenu" class="sidebarIconToggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
+
+  <div id="sidebarMenu">
+    <ul class="sidebarMenuInner">
+      <li>About Us </li>
+      <li>Demos</li>
+      <li>Features<span>DHT11</span> <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
+    </ul>
+  </div>
+
+ 
+  <br/><br/><br/>
+  <div id="main">
+    <div id="side-div"><span style="font-size: xx-large;">SMART TECHNOLOGY TO KEEP YOU SAFE</span>
+      <br/><br/><br/>
+      <p>A simple tap or voice command lets you take high-quality photos and videos, so you can capture the moment without missing the moment.</p> </div>
+  </div>
+</div>
+
+
+ <div class="LandOverview"><br/><br/>
 <h1> Temperature Example Website </h1>
- 
- 
- 
 <p>Welcome to my website displaying the temperature in ATU</p>
- 
+ </div>
  
  
 <table>
@@ -354,9 +377,9 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
  
  <td>Temperature</td>
  
- <td>  )=====");
+ <td>
  
-String homePagePart2 = F(R"=====(</td>
+</td>
  
  <td>Degree Cel</td>
  
@@ -366,40 +389,27 @@ String homePagePart2 = F(R"=====(</td>
  
  <td>Humidity</td>
  
- <td>)=====");
+ <td>
  
+ </td>
  
- 
- 
-String homePagePart3 = F(R"=====(</td>
- 
- <td>Kg/L</td>
+ <th>Kg/L</th>
  
  </tr>
  
  </table>
  
  </div>
+
+
+</td>
+<div id="footer-div">Test Footer</div>
+</body>
  
-)=====");
+</html>
 
 
-String sideBar = F(R"=====(<div class="flex-Container">
- <div class="header"></div>
- <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
-  <label for="openSidebarMenu" class="sidebarIconToggle">
-    <div class="spinner diagonal part-1"></div>
-    <div class="spinner horizontal"></div>
-    <div class="spinner diagonal part-2"></div>
-  </label>
 
-  <div id="sidebarMenu">
-    <ul class="sidebarMenuInner">
-      <li>About Us </li>
-      <li>Demos</li>
-      <li>Features<span>DHT11</span> <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
-    </ul>
-  </div>
-  </body>
- 
-</html>)=====");
+
+
+

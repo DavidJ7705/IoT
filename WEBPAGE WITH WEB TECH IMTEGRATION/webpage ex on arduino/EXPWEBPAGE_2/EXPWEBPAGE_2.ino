@@ -22,10 +22,10 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
-#include "homepage_exp.h"
+#include "homepage.h"
 #include <DFRobot_DHT11.h>
 DFRobot_DHT11 DHT;
-#define DHT11_PIN 18
+#define DHT11_PIN 4
  
 const char* ssid = "LaPhone";
 const char* password = "password";
@@ -45,7 +45,7 @@ String getHumi(){
  
  
 void handleRoot() {
-  String message =sideBar+ homePagePart1 + getTemp() + homePagePart2 +getHumi() + homePagePart3;
+  String message = homePagePart1 + getTemp() + homePagePart2 +getHumi() + homePagePart3;
   server.send(200, "text/html", message);
 }
  
