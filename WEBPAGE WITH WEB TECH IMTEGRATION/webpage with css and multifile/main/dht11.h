@@ -4,6 +4,7 @@ const char htmlDHT11[] PROGMEM = R"=====(
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="5">
     <title>DHT11 PAGE FOR SERVER</title>
     <style>
      
@@ -321,16 +322,56 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
       <span><a href="/dht11" role="button">DHT11</a></span>
       <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
     </ul>
-  </div>
+  </div>)=====";
 
-  <br/><br/><br/><br/>
+String homePagePart1 = F(R"=====(  <br/><br/><br/><br/>
   <h1> DHT11 PAGE</h1>
   
   <p>Hello! this is a test for webpage window DHT11, has sidebar with access to other pages</p>
+</td>
+ <table>
+ 
+ <tr>
+ 
+ <th>Sensor</th>
+ 
+ <th>Value</th>
+ 
+ <th>Unit</th>
+ 
+ </tr>
+ 
+ <tr>
+ 
+ <td>Temperature</td>
+ 
+ <td>)=====");
+
+ String homePagePart2 = F(R"=====(</td>
+ 
+ <td>Degree Cel</td>
+ 
+ </tr>
+ 
+ <tr>
+ 
+ <td>Humidity</td>
+ 
+ <td>)=====");
+
+  
+String homePagePart3 = F(R"=====(</td>
+ 
+ <td>Kg/L</td>
+ 
+ </tr>
+ 
+ </table>
+ 
+ </div>
 
     <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© DHT11 </div>
 </body>
 
-</html>
-)=====";
+</html>)=====");

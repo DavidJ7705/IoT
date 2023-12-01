@@ -42,7 +42,8 @@ Serial.println("GET /features");
 }
 void handleDHT11() {
 Serial.println("GET /dht11");
-  server.send(200, "text/html", htmlDHT11);
+String message = htmlDHT11 + homePagePart1 + getTemp() + homePagePart2 +getHumi() + homePagePart3;
+  server.send(200, "text/html", message);
 }
 
 void handleNotFound() {
