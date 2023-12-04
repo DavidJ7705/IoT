@@ -234,6 +234,15 @@ text-align: center;
   cursor: pointer;
   text-decoration: none;
 }
+.sidebarMenuInner span a{
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.50);
+}
+.sidebarMenuInner li:hover {
+  background-color: ce7c7c; 
+}
+
 input[type="checkbox"]:checked ~ #sidebarMenu {
   transform: translateX(0);
 }
@@ -362,7 +371,7 @@ String homePagePart1 = F(R"=====(  <br/><br/><br/><br/>
   
 String homePagePart3 = F(R"=====(</td>
  
- <td>Kg/L</td>
+ <td>L</td>
  
  </tr>
  
