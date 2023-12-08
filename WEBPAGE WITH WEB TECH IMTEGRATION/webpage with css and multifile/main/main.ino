@@ -29,7 +29,7 @@ String getHumi(){
  
  
 void handleRoot() {
-Serial.println("GET /");
+Serial.println("GET /about");
   server.send(200, "text/html", htmlAbout);
 }
  void handleDemos() {
