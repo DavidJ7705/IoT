@@ -1,4 +1,3 @@
-#include "Ultrasonic.h"
 
 // Define the pins for the ultrasonic sensor
 const int trigPin_1 = 15;
@@ -71,7 +70,7 @@ void ultraSonic(int trig, int echo, long &duration, int &distance) {
 }
 
 void controlBuzzer(int dist_1, int dist_2) {
-  if (dist_1 < 250 || dist_2 < 250) {
+  if (dist_1 < 30 || dist_2 < 30) {
     digitalWrite(buzzer, HIGH);
     digitalWrite(LED, HIGH);
     delay(100);

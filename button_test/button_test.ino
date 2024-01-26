@@ -1,7 +1,7 @@
-#include "Ultrasonic.h"
+
 
 // Define the pins for the ultrasonic sensor
-const int SW = 25;
+const int SW = 21;
 const int buzzer = 2;
 const int LED = 0;
 
@@ -24,10 +24,12 @@ void loop() {
     if (digitalRead(SW)==HIGH){
         digitalWrite(LED,LOW);
         digitalWrite(buzzer,LOW);
+        Serial.println("Switch off");
     }
     else{
         digitalWrite(LED,HIGH);
         digitalWrite(buzzer,HIGH);
+        Serial.print("Switch on");
     }
   // Wait for a short time before taking the next measurement
   delay(200);
