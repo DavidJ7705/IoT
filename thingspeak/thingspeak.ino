@@ -38,9 +38,12 @@ WiFiClient  client;
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 
+String myStatus;
+
 int number = 0;
 
 float temp,humi;
+
 void setup() {
   Serial.begin(115200);  //Initialize serial
   while (!Serial) {
@@ -62,20 +65,21 @@ void loop() {
   Serial.println(humi);
 
   ThingSpeak.setField(3,number);
-ThingSpeak.setField(4,temp);
-ThingSpeak.setField(5,humi);
+  ThingSpeak.setField(4,temp);
+  ThingSpeak.setField(5,humi);
 
-if(temp>25 && humi >60){
-  myStatus = String ("Temperature and humidity too high.");
-} else if  (temp>25 && hum <=60){
-  myStatus = String ("Temperature is too high.");
-}
-else if  (temp<=25 && hum >60){
-  myStatus = String ("humidity is too high.");
-}
-else {
-  myStatus = String ("Temperature and humidity are fine.");
-}
+  if(temp>25 && humi >60){
+    myStatus = String ("Temperature and humidity too high.");
+  } else if  (temp>25 && humi <=60){
+    myStatus = String ("Temperature is too high.");
+  }
+  else if  (temp<=25 && humi >60){
+    myStatus = String ("humidity is too high.");
+  }
+  else {
+    myStatus = String ("Temperature and humidity are fine.");
+  }
+ 
   // Connect or reconnect to WiFi
   if(WiFi.status() != WL_CONNECTED){
     Serial.print("Attempting to connect to SSID: ");
@@ -88,10 +92,11 @@ else {
     Serial.println("\nConnected.");
   }
 
-ThingSpeak.setStatus(myStatus);
+  ThingSpeak.setStatus(myStatus);
   // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
   // pieces of information in a channel.  Here, we write to field 1.
-  int x = ThingSpeak.writeField(myChannelNumber,3,number, myWriteAPIKey);
+  int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
+
   if(x == 200){
     Serial.println("Channel update successful.");
   }

@@ -45,7 +45,7 @@ String getHumi(){
  
  
 void handleRoot() {
-  String message =sideBar+ homePagePart1 + getTemp() + homePagePart2 +getHumi() + homePagePart3;
+  String message = sideBar+ homePagePart1 + getTemp() + homePagePart2 +getHumi() + homePagePart3;
   server.send(200, "text/html", message);
 }
  
