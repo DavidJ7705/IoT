@@ -1,4 +1,4 @@
-//
+
 // Define the pins for the ultrasonic sensor
 const int trigPin_1 = 15;
 const int echoPin_1 = 22;
