@@ -1,10 +1,10 @@
 
 // Define the pins for the ultrasonic sensor
 const int trigPin_1 = 15;
-const int echoPin_1 = 4;
+const int echoPin_1 = 22;
 
 const int trigPin_2 = 5;
-const int echoPin_2 = 16;
+const int echoPin_2 = 4;
 
 const int buzzer = 2;
 const int LED = 0;
