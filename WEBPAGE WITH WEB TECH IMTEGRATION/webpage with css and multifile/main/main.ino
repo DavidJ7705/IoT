@@ -7,6 +7,7 @@
 #include <DFRobot_DHT11.h>
 DFRobot_DHT11 DHT;
 #define DHT11_PIN 18
+#define REPORTING_PERIOD_MS 20000 //report to thingspeak every 20s
 
 const char* hs_ssid = "LaPhone";
 const char* hs_password = "password";
@@ -26,16 +27,14 @@ const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 String myStatus;
 float temp;
 float humi;
-
  
 WebServer server(80);
- 
+ uint32_t tsLastReport = 0; //4 byte unsigned int to time thingspeak 20s
 //temp function to simulate temp sensor
 int getTemp() {
   //DHT.read(DHT11_PIN);
   int temp_int = DHT.temperature;
   return temp_int;
-
   //String temp_string = String(DHT.temperature);
   //return temp_string;
 }
@@ -121,15 +120,16 @@ void loop(void) {
   DHT.read(DHT11_PIN);
 
   temp = DHT.temperature;
-  //Serial.print("temp:");
-  Serial.print(temp);
+  Serial.print("Temp:");
+  Serial.println(temp);
+
   humi = DHT.humidity;
-  //Serial.print(" Humi:");
+  Serial.print("Humi:");
   Serial.println(humi);
   delay(2000);
 
-  //ThingSpeak.setField(1,temp);
-  //ThingSpeak.setField(2,humi);
+  ThingSpeak.setField(1,temp);
+  ThingSpeak.setField(2,humi);
 
 /*
   if(temp>25 && humi >60){
@@ -144,18 +144,22 @@ void loop(void) {
     myStatus = String ("Temperature and humidity are fine.");
   }
   */
- 
+ if (millis () - tsLastReport > REPORTING_PERIOD_MS)
+ {
   ThingSpeak.setStatus(myStatus);
   // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
   // pieces of information in a channel.  Here, we write to field 1.
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
-
+  tsLastReport = millis();
+/*
   if(x == 200){
     Serial.println("Channel update successful.");
   }
   else{
     Serial.println("Problem updating channel. HTTP error code " + String(x));
   }
+  */
   server.handleClient();
-  delay(2);//allow the cpu to switch to other tasks
+  //delay(2);//allow the cpu to switch to other tasks
+  }
 }

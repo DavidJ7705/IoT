@@ -23,7 +23,7 @@ WebServer server(80);
  
 //temp function to simulate temp sensor
 String getTemp() {
-  DHT.read(DHT11_PIN);
+  //DHT.read(DHT11_PIN);
   String temp = String(DHT.temperature);
   return temp;
 }

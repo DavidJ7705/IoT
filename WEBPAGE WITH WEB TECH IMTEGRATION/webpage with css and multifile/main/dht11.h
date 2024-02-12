@@ -378,7 +378,8 @@ String homePagePart3 = F(R"=====(</td>
  </table>
  
  </div>
-
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=temp&type=line"></iframe>
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&type=line"></iframe>
     <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© DHT11 </div>
 </body>
