@@ -1,6 +1,7 @@
 #include <Adafruit_GPS.h>
 #define GPSSerial Serial2
-
+String text = "Pos: ";
+String mapsLocation = "http://maps.google.com/?q=";
 // Connect to the GPS on the hardware port
 Adafruit_GPS GPS(&GPSSerial);
 
@@ -44,8 +45,8 @@ void setup()
 
 void loop() // run over and over again
 {
-  //latitude = GPS.latitude;
-  //longitude = GPS.longitude;
+  latitude = GPS.latitude;
+  longitude = GPS.longitude;
 
   // read data from the GPS in the 'main loop'
   char c = GPS.read();
@@ -82,18 +83,24 @@ void loop() // run over and over again
     Serial.print(GPS.day, DEC); Serial.print('/');
     Serial.print(GPS.month, DEC); Serial.print("/20");
     Serial.println(GPS.year, DEC);
-    Serial.print("Fix: "); Serial.print((int)GPS.fix);
-    Serial.print(" quality: "); Serial.println((int)GPS.fixquality);
     if (GPS.fix) {
       Serial.print("Location: ");
       Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
       Serial.print(", ");
       Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);
-      Serial.print("Speed (knots): "); Serial.println(GPS.speed);
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
       Serial.print("Antenna status: "); Serial.println((int)GPS.antenna);
     }
   }
+  
+  lon = -GPSdata.lon;
+  Serial.print("Longitude: ");
+  Serial.println(lon,6);
+  String latCPPStr = String (lat);
+  S
+
+  mapsLocation += latCPPStr;
+  latCPPStr +=""
 }
