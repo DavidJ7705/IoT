@@ -150,8 +150,10 @@ String homePagePart3 = F(R"=====(</td>
  
  </table>
  
- </div>
- 
+ </div>)=====");
+
+ String homePagePart4 = F(R"=====(<p> 
+ Open Google maps Link</p>
 </body>
  
 </html>)=====");

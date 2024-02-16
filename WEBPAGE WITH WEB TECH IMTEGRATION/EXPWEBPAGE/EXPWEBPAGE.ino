@@ -34,21 +34,28 @@ String getHumi(){
 }
 
 String getLongi(){
-  String longi = String(GPS.longitude);
+  float longi_int = float(GPS.longitude);
+  longi_int=longi_int/100;
+  String longi= String(longi_int);
   return longi;
 }
 
 String getLati(){
-  String lati = String(GPS.latitude);
+  float lati_int = float(GPS.latitude);
+  lati_int=lati_int/100;
+  String lati = String(lati_int);
   return lati;
+}
+String getGoogle(){
+  String googleMapsLink = "https://www.google.com/maps?q=";
+  googleMapsLink += String(GPS.latitude/100, 2);
+  googleMapsLink += ",";
+  googleMapsLink += String(-GPS.longitude/100, 2);
+  return googleMapsLink;
 }
 
 void handleRoot() {
-  String googleMapsLink = "https://www.google.com/maps?q=";
-  googleMapsLink += String(GPS.latitude, 6);
-  googleMapsLink += ",";
-  googleMapsLink += String(GPS.longitude, 6);
-String message = homePagePart1 + getLongi() + homePagePart2 +getLati() + homePagePart3+"<html><body><a href='" + googleMapsLink + "'>Open in Google Maps</a></body></html>";
+  String message = homePagePart1 + getLongi() + homePagePart2 +getLati() + homePagePart3+"<a href='" + getGoogle()+ "'>"+ homePagePart4+"</a>";
   server.send(200, "text/html", message);
 }
  
@@ -154,9 +161,9 @@ void loop(void) {
     Serial.print(" quality: "); Serial.println((int)GPS.fixquality);
     if (GPS.fix) {
       Serial.print("Location: ");
-      Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
+      Serial.print(GPS.latitude/100, 2); Serial.print(GPS.lat);
       Serial.print(", ");
-      Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);
+      Serial.print(-GPS.longitude/100, 2); Serial.println(GPS.lon);
       Serial.print("Speed (knots): "); Serial.println(GPS.speed);
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
