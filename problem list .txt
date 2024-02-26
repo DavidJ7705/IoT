@@ -1,0 +1,4 @@
+try changing serial2 to pins
+return  problem 
+     SoftwareSerial mySerial(8, 7);  //GPS
+	 works after 5 minutes, then takes first bit of data and sticks with it 

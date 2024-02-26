@@ -1,10 +1,11 @@
-const char htmlAbout[] PROGMEM = R"=====(
+const char htmlGPS[] PROGMEM = R"=====(
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ABOUT PAGE FOR SERVER</title>
+    <meta http-equiv="refresh" content="8">
+    <title>GPS PAGE FOR SERVER</title>
     <style>
      
  
@@ -331,16 +332,57 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
       <span><a href="/gps" role="button">GPS</a></span>
       <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
     </ul>
-  </div>
+  </div>)=====";
 
-  <br/><br/><br/><br/>
+String gps_homePagePart1 = F(R"=====(  <br/><br/><br/><br/>
+  <h1> GPS PAGE</h1>
+  
+  <p>Hello! this is a test for webpage window DHT11, has sidebar with access to other pages</p>
+</td>
+ <table>
+ 
+ <tr>
+ 
+ <th>Sensor</th>
+ 
+ <th>Value</th>
+ 
+ <th>Unit</th>
+ 
+ </tr>
+ 
+ <tr>
+ 
+ <td>Latitude</td>
+ 
+ <td>)=====");
 
-  <h1> ABOUT PAGE</h1>
-  <p>Hello! this is a test for webpage window about, has sidebar with access to other pages</p>
+ String gps_homePagePart2 = F(R"=====(</td>
+ 
+ <td>N</td>
+ 
+ </tr>
+ 
+ <tr>
+ 
+ <td>Longitude</td>
+ 
+ <td>)=====");
 
-  <br/><br/><br/><br/><br/><br/><br/><br/>
-<div id="footer-div">© ABOUT </div>
+  
+String gps_homePagePart3 = F(R"=====(</td>
+ 
+ <td>W</td>
+ 
+ </tr>
+ 
+ </table>
+ 
+ </div>)=====");
+ String gps_homePagePart4 = F(R"=====(<p> 
+ Open Google maps Link</p>
+
+<div id="footer-div">© DHT11 </div>
 </body>
 
-</html>
-)=====";
+</html>)=====");

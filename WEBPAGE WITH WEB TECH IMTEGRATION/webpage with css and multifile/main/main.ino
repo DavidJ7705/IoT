@@ -1,3 +1,5 @@
+//THINGSPEAK AND DHT11
+
 #include <WiFi.h>
 #include "secrets.h"
 #include "ThingSpeak.h" // always include thingspeak header file after other header files and custom macros
@@ -9,6 +11,7 @@ DFRobot_DHT11 DHT;
 #define DHT11_PIN 18
 #define REPORTING_PERIOD_MS 20000 //report to thingspeak every 20s
 
+uint32_t timer = millis();
 const char* hs_ssid = "LaPhone";
 const char* hs_password = "password";
 char ssid[] = SECRET_SSID;   // your network SSID (name) 
@@ -23,6 +26,7 @@ const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 #include "demos.h"
 #include "features.h"
 #include "dht11.h"
+#include "gps.h"
 
 String myStatus;
 float temp;
@@ -30,20 +34,17 @@ float humi;
  
 WebServer server(80);
  uint32_t tsLastReport = 0; //4 byte unsigned int to time thingspeak 20s
+
 //temp function to simulate temp sensor
 int getTemp() {
-  //DHT.read(DHT11_PIN);
   int temp_int = DHT.temperature;
   return temp_int;
-  //String temp_string = String(DHT.temperature);
-  //return temp_string;
 }
 String getHumi(){
   String humi_string = String(DHT.humidity);
   return humi_string;
 }
- 
- 
+
 void handleRoot() {
 Serial.println("GET /about");
   server.send(200, "text/html", htmlAbout);
@@ -106,7 +107,6 @@ void setup(void) {
   server.on("/demos", handleDemos);
   server.on("/features", handleFeatures);
   server.on("/dht11", handleDHT11);
-
   server.on("/inline", []() {
   server.send(200, "text/plain", "this works as well");
   });
@@ -117,49 +117,27 @@ void setup(void) {
 }
  
 void loop(void) {
-  DHT.read(DHT11_PIN);
-
-  temp = DHT.temperature;
-  Serial.print("Temp:");
-  Serial.println(temp);
-
-  humi = DHT.humidity;
-  Serial.print("Humi:");
-  Serial.println(humi);
-  delay(2000);
 
   ThingSpeak.setField(1,temp);
   ThingSpeak.setField(2,humi);
 
-/*
-  if(temp>25 && humi >60){
-    myStatus = String ("Temperature and humidity too high.");
-  } else if  (temp>25 && humi <=60){
-    myStatus = String ("Temperature is too high.");
-  }
-  else if  (temp<=25 && humi >60){
-    myStatus = String ("humidity is too high.");
-  }
-  else {
-    myStatus = String ("Temperature and humidity are fine.");
-  }
-  */
- if (millis () - tsLastReport > REPORTING_PERIOD_MS)
+  DHT.read(DHT11_PIN);
+  temp = DHT.temperature;
+  Serial.print("Temp:");
+  Serial.println(temp);
+  humi = DHT.humidity;
+  Serial.print("Humi:");
+  Serial.println(humi);
+  delay(2000);
+  
+  server.handleClient();
+   if (millis () - tsLastReport > REPORTING_PERIOD_MS)
  {
   ThingSpeak.setStatus(myStatus);
   // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
   // pieces of information in a channel.  Here, we write to field 1.
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   tsLastReport = millis();
-/*
-  if(x == 200){
-    Serial.println("Channel update successful.");
-  }
-  else{
-    Serial.println("Problem updating channel. HTTP error code " + String(x));
-  }
-  */
-  server.handleClient();
   //delay(2);//allow the cpu to switch to other tasks
   }
 }
