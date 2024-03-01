@@ -138,17 +138,6 @@ text-align: center;
   float:right;
 }
 
-#body-div2 img{
-  width:65%;
-  min-height:300px;
-  margin-right: 10px;
-  border-right: 10px whitesmoke;
-  background-color: rgb(157, 199, 224);
-  float:left;
-  border-radius: 10px;
-}
-
-
 #footer-div{
 
   width:100%;

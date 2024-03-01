@@ -87,7 +87,7 @@ String message = htmlDHT11 + homePagePart1 + String(getTemp()) + homePagePart2 +
 }
 void handleGPS(){
   Serial.println("GET /gps");
-  String message = htmlGPS+gps_homePagePart1 + getLongi() + gps_homePagePart2 +getLati() + gps_homePagePart3+"<a href='" + getGoogle()+ "'>"+ gps_homePagePart4+"</a>";
+  String message = htmlGPS+gps_homePagePart1 + getLati() + gps_homePagePart2 + getLongi()+ gps_homePagePart3+"<a href='" + getGoogle()+ "'>"+ gps_homePagePart4+"</a>";
   server.send(200, "text/html", message);
 }
 
