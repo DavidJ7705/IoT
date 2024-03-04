@@ -326,7 +326,7 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 
   <h1> ABOUT PAGE</h1>
   <p>Hello! this is a test for webpage window about, has sidebar with access to other pages</p>
-
+<img src="https://atlantictu-my.sharepoint.com/:i:/g/personal/g00419108_atu_ie/ER89ZHJGZOZMmGWpPpBqCQ4BaQ5__xW-MFLjf0Gk2fsU5Q?email=G00419108%40atu.ie&e=xP2Z61">
   <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© ABOUT </div>
 </body>

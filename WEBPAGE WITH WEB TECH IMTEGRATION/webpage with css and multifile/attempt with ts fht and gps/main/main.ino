@@ -14,6 +14,21 @@ DFRobot_DHT11 DHT;
 Adafruit_GPS GPS(&GPSSerial);
 #define GPSECHO false
 
+#define BAUDRATE 115200
+
+// Variables to store the duration and distance
+long duration_1;
+int distance_1;
+
+long duration_2;
+int distance_2;
+
+float temp;
+float humi;
+
+unsigned long previousMillis = 0;
+const long interval = 2000; // Interval in milliseconds
+
 uint32_t timer = millis();
 const char* hs_ssid = "LaPhone";
 const char* hs_password = "password";
@@ -31,9 +46,17 @@ const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 #include "dht11.h"
 #include "gps.h"
 
+// Define the pins for the ultrasonic sensor
+const int trigPin_1 = 15;
+const int echoPin_1 = 22;
+
+const int trigPin_2 = 5;
+const int echoPin_2 = 4;
+
+const int buzzer = 2;
+const int LED = 0;
+
 String myStatus;
-float temp;
-float humi;
  
 WebServer server(80);
  uint32_t tsLastReport = 0; //4 byte unsigned int to time thingspeak 20s
@@ -62,9 +85,9 @@ String getLati(){
 }
 String getGoogle(){
   String googleMapsLink = "https://www.google.com/maps?q=";
-  googleMapsLink += String(GPS.latitude/100, 2);
+  googleMapsLink += String(GPS.latitude/99.79148, 4);
   googleMapsLink += ",";
-  googleMapsLink += String(-GPS.longitude/100, 2);
+  googleMapsLink += String(-GPS.longitude/99.959, 4);
   return googleMapsLink;
 }
 
@@ -141,6 +164,15 @@ void setup(void) {
   server.begin();
   Serial.println("HTTP server started");
 
+  pinMode(trigPin_1, OUTPUT);
+  pinMode(echoPin_1, INPUT);
+  
+  pinMode(trigPin_2, OUTPUT);
+  pinMode(echoPin_2, INPUT);
+  
+  pinMode(buzzer, OUTPUT);
+  pinMode(LED, OUTPUT);
+
   // GPS
   Serial.println("Adafruit GPS library basic parsing test!");
   GPS.begin(9600);
@@ -155,16 +187,38 @@ void setup(void) {
 }
  
 void loop(void) {
-   DHT.read(DHT11_PIN);
-  temp = DHT.temperature;
-  Serial.print("Temp:");
-  Serial.println(temp);
-  humi = DHT.humidity;
-  Serial.print("Humi:");
-  Serial.println(humi);
-  delay(2000);
-  
-      // read data from the GPS in the 'main loop'
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+    // Save the last time we read the sensors
+    previousMillis = currentMillis;
+    
+    // Read DHT11 sensor
+    DHT.read(DHT11_PIN);
+    temp = DHT.temperature;
+    Serial.print("\nTemp:");
+    Serial.println(temp);
+    humi = DHT.humidity;
+    Serial.print("Humi:");
+    Serial.println(humi);
+    
+    // Measure distance for sensor 1
+    ultraSonic(trigPin_1, echoPin_1, duration_1, distance_1);
+    // Print the distance to the Serial Monitor
+    Serial.print("\nDistance 1: ");
+    Serial.print(distance_1);
+    Serial.println(" cm");
+
+    // Measure distance for sensor 2
+    ultraSonic(trigPin_2, echoPin_2, duration_2, distance_2);
+    // Print the distance to the Serial Monitor
+    Serial.print("Distance 2: ");
+    Serial.print(distance_2);
+    Serial.println(" cm");
+
+    // Control buzzer and LED
+    controlBuzzer(distance_1, distance_2);
+  }
+   // read data from the GPS in the 'main loop'
   char c = GPS.read();
   // if you want to debug, this is a good time to do it!
   if (GPSECHO)
@@ -212,6 +266,7 @@ void loop(void) {
       Serial.print("Antenna status: "); Serial.println((int)GPS.antenna);
     }
   }
+  
 
   server.handleClient();
    if (millis () - tsLastReport > REPORTING_PERIOD_MS)
@@ -224,5 +279,26 @@ void loop(void) {
   // pieces of information in a channel.  Here, we write to field 1.
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   tsLastReport = millis();
+  }
+}
+
+
+void ultraSonic(int trig, int echo, long &duration, int &distance) {
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+  duration = pulseIn(echo, HIGH);
+  distance = duration * 0.0343 / 2;
+}
+
+void controlBuzzer(int dist_1, int dist_2) {
+  if (dist_1 < 30 || dist_2 < 30) {
+    digitalWrite(buzzer, HIGH);
+    digitalWrite(LED, HIGH);
+  } else {
+    digitalWrite(buzzer, LOW);
+    digitalWrite(LED, LOW);
   }
 }
