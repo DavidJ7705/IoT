@@ -4,9 +4,11 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
+
 #include <DFRobot_DHT11.h>
 DFRobot_DHT11 DHT;
 #define DHT11_PIN 18
+
 #define REPORTING_PERIOD_MS 20000 //report to thingspeak every 20s
 
 #include <Adafruit_GPS.h>
@@ -48,7 +50,7 @@ const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 
 // Define the pins for the ultrasonic sensor
 const int trigPin_1 = 15;
-const int echoPin_1 = 22;
+const int echoPin_1 = 13;
 
 const int trigPin_2 = 5;
 const int echoPin_2 = 4;
@@ -84,10 +86,32 @@ String getLati(){
   return lati;
 }
 String getGoogle(){
+  float lati_v1;// divide 100
+  int lati_int;//takes out the integer
+  float lati_dec;//takes out the decimal
+  float lati_v2;//final latitude
+
+  lati_v1 = GPS.latitude/100;
+  lati_int = lati_v1;
+  lati_dec = lati_v1 - lati_int;
+  lati_dec = lati_dec/60;
+  lati_v2 = lati_int + lati_dec;
+
+  float longi_v1;// divide 100
+  int longi_int;//takes out the integer
+  float longi_dec;//takes out the decimal
+  float longi_v2;//final longitude
+
+  longi_v1 = GPS.longitude/100;
+  longi_int = longi_v1;
+  longi_dec = longi_v1 - longi_int;
+  longi_dec = longi_dec/60;
+  longi_v2 = longi_int + longi_dec;
+  
   String googleMapsLink = "https://www.google.com/maps?q=";
-  googleMapsLink += String(GPS.latitude/99.79148, 4);
+  googleMapsLink += String(lati_v2, 4);
   googleMapsLink += ",";
-  googleMapsLink += String(-GPS.longitude/99.959, 4);
+  googleMapsLink += String(-longi_v2, 4);
   return googleMapsLink;
 }
 

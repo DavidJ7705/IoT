@@ -12,6 +12,9 @@ const int LED = 0;
 DFRobot_DHT11 DHT;
 #define DHT11_PIN 18
 
+#include <Wire.h>
+#include "MAX30100_PulseOximeter.h"
+PulseOximeter pox;
 
 #include <Adafruit_GPS.h>
 #define GPSSerial Serial2
@@ -20,6 +23,7 @@ Adafruit_GPS GPS(&GPSSerial);
 
 uint32_t timer = millis();
 #define BAUDRATE 115200
+#define REPORTING_PERIOD_MS 1000
 
 // Variables to store the duration and distance
 long duration_1;
@@ -46,6 +50,15 @@ void setup() {
   pinMode(buzzer, OUTPUT);
   pinMode(LED, OUTPUT);
 
+  Serial.print("Initializing pulse oximeter..");
+    if (!pox.begin()) {
+        Serial.println("FAILED");
+        for(;;);
+    } else {
+        Serial.println("SUCCESS");
+    }
+    pox.setOnBeatDetectedCallback(onBeatDetected);
+
    // GPS
   Serial.println("Adafruit GPS library basic parsing test!");
   GPS.begin(9600);
@@ -61,12 +74,23 @@ void setup() {
 
 void loop() {
   unsigned long currentMillis = millis();
-
+  pox.update();
   // Check if it's time to read sensors
   if (currentMillis - previousMillis >= interval) {
     // Save the last time we read the sensors
     previousMillis = currentMillis;
     
+    // Read heart rate sensor
+    if (pox.getHeartRate() != 0 && pox.getSpO2() != 0) {
+      Serial.print("\nHeart rate:");
+      Serial.print(pox.getHeartRate());
+      Serial.print("bpm / SpO2:");
+      Serial.print(pox.getSpO2());
+      Serial.println("%");
+    } else {
+      Serial.println("\nHeart rate sensor data not valid");
+    }
+
     // Read DHT11 sensor
     DHT.read(DHT11_PIN);
     temp = DHT.temperature;
@@ -92,7 +116,7 @@ void loop() {
 
     // Control buzzer and LED
     controlBuzzer(distance_1, distance_2);
-  }
+    }
    // read data from the GPS in the 'main loop'
   char c = GPS.read();
   // if you want to debug, this is a good time to do it!
@@ -108,38 +132,38 @@ void loop() {
       return; // we can fail to parse a sentence in which case we should just wait for another
   }
   // approximately every 2 seconds or so, print out the current stats
-  if (millis() - timer > 2000) {
-    timer = millis(); // reset the timer
-    Serial.print("\nTime: ");
-    if (GPS.hour < 10) { Serial.print('0'); }
-    Serial.print(GPS.hour, DEC); Serial.print(':');
-    if (GPS.minute < 10) { Serial.print('0'); }
-    Serial.print(GPS.minute, DEC); Serial.print(':');
-    if (GPS.seconds < 10) { Serial.print('0'); }
-    Serial.print(GPS.seconds, DEC); Serial.print('.');
-    if (GPS.milliseconds < 10) {
-      Serial.print("00");
-    } else if (GPS.milliseconds > 9 && GPS.milliseconds < 100) {
-      Serial.print("0");
-    }
-    Serial.println(GPS.milliseconds);
-    Serial.print("Date: ");
-    Serial.print(GPS.day, DEC); Serial.print('/');
-    Serial.print(GPS.month, DEC); Serial.print("/20");
-    Serial.println(GPS.year, DEC);
-    Serial.print("Fix: "); Serial.print((int)GPS.fix);
-    Serial.print(" quality: "); Serial.println((int)GPS.fixquality);
-    if (GPS.fix) {
-      Serial.print("Location: ");
-      Serial.print(GPS.latitude/100, 2); Serial.print(GPS.lat);
-      Serial.print(", ");
-      Serial.print(-GPS.longitude/100, 2); Serial.println(GPS.lon);
-      Serial.print("Speed (knots): "); Serial.println(GPS.speed);
-      Serial.print("Angle: "); Serial.println(GPS.angle);
-      Serial.print("Altitude: "); Serial.println(GPS.altitude);
-      Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
-      Serial.print("Antenna status: "); Serial.println((int)GPS.antenna);
-    }
+    if (millis() - timer > 2000) {
+      timer = millis(); // reset the timer
+      Serial.print("\nTime: ");
+      if (GPS.hour < 10) { Serial.print('0'); }
+      Serial.print(GPS.hour, DEC); Serial.print(':');
+      if (GPS.minute < 10) { Serial.print('0'); }
+      Serial.print(GPS.minute, DEC); Serial.print(':');
+      if (GPS.seconds < 10) { Serial.print('0'); }
+      Serial.print(GPS.seconds, DEC); Serial.print('.');
+      if (GPS.milliseconds < 10) {
+        Serial.print("00");
+      } else if (GPS.milliseconds > 9 && GPS.milliseconds < 100) {
+        Serial.print("0");
+      }
+      Serial.println(GPS.milliseconds);
+      Serial.print("Date: ");
+      Serial.print(GPS.day, DEC); Serial.print('/');
+      Serial.print(GPS.month, DEC); Serial.print("/20");
+      Serial.println(GPS.year, DEC);
+      Serial.print("Fix: "); Serial.print((int)GPS.fix);
+      Serial.print(" quality: "); Serial.println((int)GPS.fixquality);
+      if (GPS.fix) {
+        Serial.print("Location: ");
+        Serial.print(GPS.latitude/100, 2); Serial.print(GPS.lat);
+        Serial.print(", ");
+        Serial.print(-GPS.longitude/100, 2); Serial.println(GPS.lon);
+        Serial.print("Speed (knots): "); Serial.println(GPS.speed);
+        Serial.print("Angle: "); Serial.println(GPS.angle);
+        Serial.print("Altitude: "); Serial.println(GPS.altitude);
+        Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
+        Serial.print("Antenna status: "); Serial.println((int)GPS.antenna);
+      }
   }
 }
 
@@ -161,4 +185,9 @@ void controlBuzzer(int dist_1, int dist_2) {
     digitalWrite(buzzer, LOW);
     digitalWrite(LED, LOW);
   }
+}
+
+void onBeatDetected()
+{
+    Serial.println("Beat!");
 }

@@ -17,7 +17,7 @@ const char htmlDHT11[] PROGMEM = R"=====(
 
 html, body {
   overflow-x: hidden;
-  background-color: #CCCCFF;
+  background-color: #FFFFFF;
   height: 100%;
 }
 
@@ -27,7 +27,7 @@ html, body {
  
  flex-direction: column;
  
- background-color: #CCCCFF;
+ background-color: #FFFFFF;
  
  align-items: center;
  
@@ -111,42 +111,6 @@ text-align: center;
   color: white;
   font-family: Avenir;
   float:left;
-}
-
-#body-div img{
-  width:65%;
-  min-height:300px;
-  margin-right: 20px;
-  border-right: 10px whitesmoke;
-  background-color: rgb(157, 199, 224);
-  float:right;
-  border-radius: 10px;
-}
-
-#side-div2{
-  width:20%;
-  padding-left: 10px;
-  margin-top: 10px;
-  margin-right: 20px;
-  min-height:300px;
-  font-size: 13px;
-  line-height: 50px;
-  text-align:left;
-  background-color: #33475b;
-  border-radius: 10px;
-  color: white;
-  font-family: Avenir;
-  float:right;
-}
-
-#body-div2 img{
-  width:65%;
-  min-height:300px;
-  margin-right: 10px;
-  border-right: 10px whitesmoke;
-  background-color: rgb(157, 199, 224);
-  float:left;
-  border-radius: 10px;
 }
 
 
