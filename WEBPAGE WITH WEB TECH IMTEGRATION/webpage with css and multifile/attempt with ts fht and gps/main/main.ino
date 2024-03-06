@@ -89,29 +89,29 @@ String getGoogle(){
   float lati_v1;// divide 100
   int lati_int;//takes out the integer
   float lati_dec;//takes out the decimal
-  float lati_v2;//final latitude
+  double lati_v2;//final latitude
 
   lati_v1 = GPS.latitude/100;
   lati_int = lati_v1;
   lati_dec = lati_v1 - lati_int;
-  lati_dec = lati_dec/60;
+  lati_dec = lati_dec/0.6;
   lati_v2 = lati_int + lati_dec;
 
   float longi_v1;// divide 100
   int longi_int;//takes out the integer
   float longi_dec;//takes out the decimal
-  float longi_v2;//final longitude
+  double longi_v2;//final longitude
 
   longi_v1 = GPS.longitude/100;
   longi_int = longi_v1;
   longi_dec = longi_v1 - longi_int;
-  longi_dec = longi_dec/60;
+  longi_dec = longi_dec/0.6;
   longi_v2 = longi_int + longi_dec;
   
   String googleMapsLink = "https://www.google.com/maps?q=";
-  googleMapsLink += String(lati_v2, 4);
+  googleMapsLink += String(lati_v2,6);
   googleMapsLink += ",";
-  googleMapsLink += String(-longi_v2, 4);
+  googleMapsLink += String(-longi_v2,6);
   return googleMapsLink;
 }
 
@@ -242,6 +242,7 @@ void loop(void) {
     // Control buzzer and LED
     controlBuzzer(distance_1, distance_2);
   }
+
    // read data from the GPS in the 'main loop'
   char c = GPS.read();
   // if you want to debug, this is a good time to do it!
