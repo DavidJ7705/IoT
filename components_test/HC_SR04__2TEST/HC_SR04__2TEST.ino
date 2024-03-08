@@ -58,6 +58,12 @@ void setup() {
         Serial.println("SUCCESS");
     }
     pox.setOnBeatDetectedCallback(onBeatDetected);
+    
+	// Configure sensor to use 7.6mA for LED drive
+	pox.setIRLedCurrent(MAX30100_LED_CURR_7_6MA);
+
+    // Register a callback routine
+    pox.setOnBeatDetectedCallback(onBeatDetected);
 
    // GPS
   Serial.println("Adafruit GPS library basic parsing test!");
@@ -73,24 +79,21 @@ void setup() {
 }
 
 void loop() {
+   pox.update();
   unsigned long currentMillis = millis();
-  pox.update();
+ 
   // Check if it's time to read sensors
   if (currentMillis - previousMillis >= interval) {
     // Save the last time we read the sensors
     previousMillis = currentMillis;
-    
+
     // Read heart rate sensor
-    if (pox.getHeartRate() != 0 && pox.getSpO2() != 0) {
       Serial.print("\nHeart rate:");
       Serial.print(pox.getHeartRate());
       Serial.print("bpm / SpO2:");
       Serial.print(pox.getSpO2());
       Serial.println("%");
-    } else {
-      Serial.println("\nHeart rate sensor data not valid");
-    }
-
+  
     // Read DHT11 sensor
     DHT.read(DHT11_PIN);
     temp = DHT.temperature;
@@ -118,20 +121,16 @@ void loop() {
     controlBuzzer(distance_1, distance_2);
     }
    // read data from the GPS in the 'main loop'
-  char c = GPS.read();
-  // if you want to debug, this is a good time to do it!
-  if (GPSECHO)
+    char c = GPS.read();
+    // if you want to debug, this is a good time to do it!
+    if (GPSECHO)
     if (c) Serial.print(c);
-  // if a sentence is received, we can check the checksum, parse it...
-  if (GPS.newNMEAreceived()) {
-    // a tricky thing here is if we print the NMEA sentence, or data
-    // we end up not listening and catching other sentences!
-    // so be very wary if using OUTPUT_ALLDATA and trying to print out data
-   // Serial.print(GPS.lastNMEA()); // this also sets the newNMEAreceived() flag to false
-    if (!GPS.parse(GPS.lastNMEA())) // this also sets the newNMEAreceived() flag to false
-      return; // we can fail to parse a sentence in which case we should just wait for another
-  }
-  // approximately every 2 seconds or so, print out the current stats
+    if (GPS.newNMEAreceived()) {
+      if (!GPS.parse(GPS.lastNMEA())) // this also sets the newNMEAreceived() flag to false
+        return; // we can fail to parse a sentence in which case we should just wait for another
+
+    }
+    // approximately every 2 seconds or so, print out the current stats
     if (millis() - timer > 2000) {
       timer = millis(); // reset the timer
       Serial.print("\nTime: ");
@@ -158,11 +157,9 @@ void loop() {
         Serial.print(GPS.latitude/100, 2); Serial.print(GPS.lat);
         Serial.print(", ");
         Serial.print(-GPS.longitude/100, 2); Serial.println(GPS.lon);
-        Serial.print("Speed (knots): "); Serial.println(GPS.speed);
         Serial.print("Angle: "); Serial.println(GPS.angle);
         Serial.print("Altitude: "); Serial.println(GPS.altitude);
         Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
-        Serial.print("Antenna status: "); Serial.println((int)GPS.antenna);
       }
   }
 }

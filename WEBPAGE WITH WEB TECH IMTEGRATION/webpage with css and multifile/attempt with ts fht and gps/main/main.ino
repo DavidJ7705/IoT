@@ -28,6 +28,9 @@ int distance_2;
 float temp;
 float humi;
 
+int lati_ts;
+int longi_ts;
+
 unsigned long previousMillis = 0;
 const long interval = 2000; // Interval in milliseconds
 
@@ -289,6 +292,11 @@ void loop(void) {
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
       Serial.print("Antenna status: "); Serial.println((int)GPS.antenna);
+
+      //thingspeak values
+      lati_ts = GPS.latitude/100;
+      longi_ts = -GPS.longitude/100;
+
     }
   }
   
@@ -298,8 +306,10 @@ void loop(void) {
  {
   ThingSpeak.setStatus(myStatus);
   // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
-    ThingSpeak.setField(1,temp);
+  ThingSpeak.setField(1,temp);
   ThingSpeak.setField(2,humi);
+  ThingSpeak.setField(3,lati_ts);
+  ThingSpeak.setField(4,longi_ts);
 
   // pieces of information in a channel.  Here, we write to field 1.
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
