@@ -359,7 +359,6 @@ String dht_homePagePart1 = F(R"=====(
  
  <td>)=====");
 
-  
 String dht_homePagePart3 = F(R"=====(</td>
  
  <td>L</td>
