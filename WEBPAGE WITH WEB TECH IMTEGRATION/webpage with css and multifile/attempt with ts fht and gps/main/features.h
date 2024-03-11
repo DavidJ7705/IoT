@@ -312,16 +312,18 @@ const char htmlFeatures[] PROGMEM = R"=====(
             <div class="spinner diagonal part-2"></div>
         </label>
 
-        <div id="sidebarMenu">
-            <ul class="sidebarMenuInner">
-                <li><a href="/" role="button">ABOUT</a></li>
-                <li><a href="/demos" role="button">DEMOS</a></li>
-                <li><a href="/features" role="button">FEATURES</a></li>
-                <span><a href="/dht11" role="button">DHT11</a></span>
-                <span><a href="/gps" role="button">GPS</a></span>
-                <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span>
-            </ul>
-        </div>
+    <div id="sidebarMenu">
+    <ul class="sidebarMenuInner">
+      <li><a href="/" role="button">ABOUT</a></li>
+      <li><a href="/demos" role="button">DEMOS</a></li>
+      <li><a href="#" role="button" onclick="toggleFeatures()">FEATURES</a>
+        <span id="featuresSubMenu" style="display: none;">
+          <a href="/dht11" role="button">DHT11</a>
+          <a href="/gps" role="button">GPS</a>
+        </span>
+      </li>
+    </ul>
+  </div>
 
         <br/><br/><br/><br/>
         <h1> FEATURES PAGE</h1>
@@ -331,6 +333,13 @@ const char htmlFeatures[] PROGMEM = R"=====(
         <br/><br/><br/><br/><br/><br/><br/><br/>
         <div id="footer-div">© FEATURES </div>
     </div>
+
+      <script>
+    function toggleFeatures() {
+      var subMenu = document.getElementById("featuresSubMenu");
+      subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
+    }
+  </script>
 </body>
 
 </html>

@@ -8,246 +8,279 @@ const char htmlAbout[] PROGMEM = R"=====(
 
     <style>
  
-    *{
-      margin: 0px;
-      padding: 00px;
-      font-family:Verdana,Tahoma, sans-serif;
-    }
+ *{
+            margin: 0px;
+            padding: 00px;
+            box-sizing: border-box;
+            font-family: Verdana, Tahoma, sans-serif;
+        }
 
-    .flex-Container{
-      display: flex;
-      flex-direction: column;
-      background-color: #FFFFFF;
-      align-items: center;
-    }
-    
-    h1{
-      font: bold;
-      font-size: 40px;
-      font-family: Arial;
-      color: navy;
-      text-align: center;
-    }
-    
-    p{
-      font-size 25px;
-      font-family: Arial;
-      color: navy;
-      text-align: center;
-    }
-        
-    th,td{
-      font-size: 25px;
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-        
-    .clearfix::after{
-      content:"";
-      display:block;
-      clear:both;
-    }
+        html, body {
+            overflow-x: hidden;
+            background-color: #FFFFFF;
+            height: 100%;
+        }
 
+        .flex-Container {
+            display: flex;
+            flex-direction: column;
+            background-color: #FFFFFF;
+            align-items: center;
+        }
 
-    #main{
-      width:100%;
-      min-height:300px;
-      background-color: rgb(255, 255, 255);
-      margin-bottom: 10px;
-      border: 10px solid rgb(255, 255, 255);
-    }
+        h1 {
+            font: bold;
+            font-size: 35px;
+            font-family: Arial;
+            color: navy;
+            text-align: center;
+        }
 
-    #side-div{
-      width:99.5%;
-      padding-left: 10px;
-      min-height:300px;
-      font-size: 13px;
-      line-height: 50px;
-      text-align:left;
-      background-color: #33475b;
-      border-radius: 10px;
-      color: white;
-      font-family: Avenir;
-      float:left;
-    }
+        p {
+            font-size: 20px;
+            font-family: Arial;
+            color: navy;
+            text-align: center;
+        }
 
-    #body-div img{
-      width:65%;
-      min-height:300px;
-      margin-right: 20px;
-      border-right: 10px whitesmoke;
-      background-color: rgb(157, 199, 224);
-      float:right;
-      border-radius: 10px;
-    }
+        th, td {
+            font-size: 25px;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
 
-    #footer-div{
-      width:100%;
-      min-height:50px;
-      line-height:50px;
-      background-color:#173042;
-      text-align:center;
-      font-size:smaller;
-    }
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
 
+        #intro {
+            width: 100%;
+             max-width: 1200px; /* Set maximum width */
+            font-family: Verdana, Tahoma, sans-serif;
+            min-height: 50px;
+            padding:20px;
+            border-right: 20px whitesmoke;
+            border-left: 20px whitesmoke;
+            background-color: rgb(226, 232, 236);
+            overflow: hidden; /* Prevent content from overflowing */
+        }
 
-    .LandOverview div{
-      vertical-align: middle;
-      font-size: 30px;
-      color:rgb(30, 28, 28);
-      letter-spacing: 1.20px;
-    }
+        #main {
+            width: 100%;
+            min-height: 50px;
+            background-color: rgb(255, 255, 255);
+            margin-bottom: 10px;
+            border: 10px solid rgb(255, 255, 255);
+        }
 
-    .header {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-      max-width: 100%;
-      box-shadow: none;
-      background-color: #173042;   /* #FC466B */
-      text-align:center;
-      position: fixed;
-      height: 60px!important;
-      overflow: hidden;
-      z-index: 10;
-    }
+        #footer-div {
+            width: 100%;
+            min-height: 50px;
+            line-height: 50px;
+            background-color: #173042;
+            text-align: center;
+            font-size: smaller;
+        }
 
-    .main_body{
-      margin: 0 auto;
-      display: block;
-      height: 100%;
-      margin-top: 60px;
-    }
+        .LandOverview div {
+            vertical-align: middle;
+            font-size: 30px;
+            color: rgb(30, 28, 28);
+            letter-spacing: 1.20px;
+        }
 
-    .mainInner{
-      display: table;
-      height: 100%;
-      width: 100%;
-      text-align: center;
-    }
+        .header {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            box-shadow: none;
+            background-color: #173042;   /* #FC466B */
+            text-align: center;
+            position: fixed;
+            height: 60px!important;
+            overflow: hidden;
+            z-index: 10;
+        }
 
-    .mainInner div{
-      display:table-cell;
-      vertical-align: middle;
-      font-size: 3em;
-      font-weight: bold;
-      letter-spacing: 1.25px;
-    }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            width: 100%;
+            height: 60px;
+            background-color: #173042;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
 
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+        }
 
-    #sidebarMenu {
-      height: 100%;
-      position: fixed;
-      left: 0;
-      width: 250px;
-      margin-top: 60px;
-      transform: translateX(-250px);
-      transition: transform 250ms ease-in-out;
-      background: linear-gradient(186deg, #173042 32%, #ce7c7c 68%);
-    }
-    .sidebarMenuInner{
-      margin:0;
-      padding:0;
-      border-top: 1px solid rgba(255, 255, 255, 0.10);
-    }
-    .sidebarMenuInner li{
-      list-style: none;
-      color: #fff;
-      text-transform: uppercase;
-      font-weight: bold;
-      padding: 20px;
-      cursor: pointer;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-    }
-    .sidebarMenuInner li span{
-      display: block;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.50);
-    }
-    .sidebarMenuInner li a{
-      color: #fff;
-      text-transform: uppercase;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .sidebarMenuInner span a{
-      display: block;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.50);
-    }
-    .sidebarMenuInner li:hover {
-      background-color: ce7c7c; 
-    }
+        .navbar a:hover {
+            background-color: #33475b;
+        }
 
-    input[type="checkbox"]:checked ~ #sidebarMenu {
-      transform: translateX(0);
-    }
+        .main_body {
+            margin: 0 auto;
+            display: block;
+            height: 100%;
+            margin-top: 60px; /* Adjusted to accommodate the fixed navbar */
+        }
 
-    input[type=checkbox] {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      display: none;
-    }
-    .sidebarIconToggle {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      cursor: pointer;
-      position: absolute;
-      z-index: 99;
-      height: 100%;
-      width: 100%;
-      top: 22px;
-      left: 15px;
-      height: 22px;
-      width: 22px;
-    }
-    .spinner {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      position: absolute;
-      height: 3px;
-      width: 100%;
-      background-color: #fff;
-    }
-    .horizontal {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      position: relative;
-      float: left;
-      margin-top: 3px;
-    }
-    .diagonal.part-1 {
-      position: relative;
-      transition: all 0.3s;
-      box-sizing: border-box;
-      float: left;
-    }
-    .diagonal.part-2 {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      position: relative;
-      float: left;
-      margin-top: 3px;
-    }
-    input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      opacity: 0;
-    }
-    input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      transform: rotate(135deg);
-      margin-top: 8px;
-    }
-    input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
-      transition: all 0.3s;
-      box-sizing: border-box;
-      transform: rotate(-135deg);
-      margin-top: -9px;
-    }
+        .mainInner {
+            display: table;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .mainInner div {
+            display: table-cell;
+            vertical-align: middle;
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 1.25px;
+        }
+
+        #sidebarMenu {
+            height: 100%;
+            position: fixed;
+            left: 0;
+            width: 250px;
+            margin-top: 60px;
+            transform: translateX(-250px);
+            transition: transform 250ms ease-in-out;
+            background: linear-gradient(186deg, #173042 32%, #ce7c7c 68%);
+        }
+
+        .sidebarMenuInner {
+            margin: 0;
+            padding: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .sidebarMenuInner li {
+            list-style: none;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .sidebarMenuInner li span {
+            display: block;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.50);
+        }
+
+        .sidebarMenuInner li a {
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .sidebarMenuInner span a {
+            display: block;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.50);
+        }
+
+        .sidebarMenuInner li:hover {
+            background-color: ce7c7c; 
+        }
+
+        input[type="checkbox"]:checked ~ #sidebarMenu {
+            transform: translateX(0);
+        }
+
+        input[type=checkbox] {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            display: none;
+        }
+
+        .sidebarIconToggle {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            cursor: pointer;
+            position: absolute;
+            z-index: 99;
+            height: 100%;
+            width: 100%;
+            top: 22px;
+            left: 15px;
+            height: 22px;
+            width: 22px;
+        }
+
+        .spinner {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .horizontal {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            margin-top: 3px;
+        }
+
+        .diagonal.part-1 {
+            position: relative;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            float: left;
+        }
+
+        .diagonal.part-2 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            margin-top: 3px;
+        }
+
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            opacity: 0;
+        }
+
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            transform: rotate(135deg);
+            margin-top: 8px;
+        }
+
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            transform: rotate(-135deg);
+            margin-top: -9px;
+        }
+
+       
 </style>
 </head>
 
@@ -260,15 +293,16 @@ const char htmlAbout[] PROGMEM = R"=====(
       <div class="spinner horizontal"></div>
     <div class="spinner diagonal part-2"></div>
   </label>
-
-  <div id="sidebarMenu">
+    <div id="sidebarMenu">
     <ul class="sidebarMenuInner">
       <li><a href="/" role="button">ABOUT</a></li>
       <li><a href="/demos" role="button">DEMOS</a></li>
-      <li><a href="/features" role="button">FEATURES</a>
-      <span><a href="/dht11" role="button">DHT11</a></span>
-      <span><a href="/gps" role="button">GPS</a></span>
-      <span>Ultrasonics</span> <span>Heart-Rate Sensor</span><span>SIM Module</span><span>Accelerometer</span></li>
+      <li><a href="#" role="button" onclick="toggleFeatures()">FEATURES</a>
+        <span id="featuresSubMenu" style="display: none;">
+          <a href="/dht11" role="button">DHT11</a>
+          <a href="/gps" role="button">GPS</a>
+        </span>
+      </li>
     </ul>
   </div>
 
@@ -279,6 +313,12 @@ const char htmlAbout[] PROGMEM = R"=====(
   <iframe src="https://drive.google.com/file/d/1EQ8dlqYAdYePRaypsW80qOBFtAWExVb8/preview" width="640" height="480" allow="autoplay"></iframe>
   <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© ABOUT </div>
+<script>
+    function toggleFeatures() {
+      var subMenu = document.getElementById("featuresSubMenu");
+      subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
+    }
+  </script>
 </body>
 
 </html>

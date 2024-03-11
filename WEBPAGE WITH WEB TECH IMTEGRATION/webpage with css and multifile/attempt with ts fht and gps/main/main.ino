@@ -75,17 +75,37 @@ String getHumi(){
   String humi_string = String(DHT.humidity);
   return humi_string;
 }
+
 String getLongi(){
-  float longi_int = float(GPS.longitude);
-  longi_int=longi_int/100;
-  String longi= String(longi_int);
+  float longi_v1;// divide 100
+  int longi_int;//takes out the integer
+  float longi_dec;//takes out the decimal
+  double longi_v2;//final longitude
+
+  longi_v1 = GPS.longitude/100;
+  longi_int = longi_v1;
+  longi_dec = longi_v1 - longi_int;
+  longi_dec = longi_dec/0.6;
+  longi_v2 = longi_int + longi_dec;
+
+  String longi = String(-longi_v2,2);
   return longi;
 }
 
 String getLati(){
-  float lati_int = float(GPS.latitude);
-  lati_int=lati_int/100;
-  String lati = String(lati_int);
+  float lati_v1;// divide 100
+  int lati_int;//takes out the integer
+  float lati_dec;//takes out the decimal
+  double lati_v2;//final latitude
+  String lati;
+
+  lati_v1 = GPS.latitude/100;
+  lati_int = lati_v1;
+  lati_dec = lati_v1 - lati_int;
+  lati_dec = lati_dec/0.6;
+  lati_v2 = lati_int + lati_dec;
+
+  lati = String(lati_v2,2);
   return lati;
 }
 String getGoogle(){
@@ -132,14 +152,21 @@ Serial.println("GET /features");
 }
 void handleDHT11() {
 Serial.println("GET /dht11");
-String message = htmlDHT11 + homePagePart1 + String(getTemp()) + homePagePart2 +getHumi() + homePagePart3;
+String message = htmlDHT11 + dht_homePagePart1 + String(getTemp()) + dht_homePagePart2 +getHumi() + dht_homePagePart3;
   server.send(200, "text/html", message);
 }
 void handleGPS(){
   Serial.println("GET /gps");
-  String message = htmlGPS+gps_homePagePart1 + getLati() + gps_homePagePart2 + getLongi()+ gps_homePagePart3+"<a href='" + getGoogle()+ "'>"+ gps_homePagePart4+"</a>";
+
+  String lat = getLati();
+  String lon = getLongi();
+
+  String iframe = "<center> <iframe width=\"350\" height=\"250\" frameborder=\"0\" style=\"border:0\" referrerpolicy=\"no-referrer-when-downgrade\" src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyAn7COqk8b29M1GINRhM_fWCwLQpPkTsbI&zoom=14&q=" + lat + "," + lon + "\" allowfullscreen></iframe></center>";
+
+  String message = htmlGPS + gps_homePagePart1 + getLati() + gps_homePagePart2 + getLongi() + gps_homePagePart3 + "<a href='" + getGoogle() + "'>" + gps_homePagePart4 + "</a><br><br>" + iframe +"<br><br>"+ gps_homePagePart5;
   server.send(200, "text/html", message);
 }
+
 
 void handleNotFound() {
   String message = "File Not Found\n\n";
@@ -291,7 +318,6 @@ void loop(void) {
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
-      Serial.print("Antenna status: "); Serial.println((int)GPS.antenna);
 
       //thingspeak values
       lati_ts = GPS.latitude/100;
