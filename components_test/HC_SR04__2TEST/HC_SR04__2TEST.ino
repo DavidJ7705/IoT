@@ -8,9 +8,16 @@ const int echoPin_2 = 4;
 const int buzzer = 2;
 const int LED = 0;
 
-#include <DFRobot_DHT11.h>
-DFRobot_DHT11 DHT;
-#define DHT11_PIN 18
+#include "DHT_Async.h"
+#define DHT_SENSOR_TYPE DHT_TYPE_11
+
+#include <Arduino.h>
+static const int DHT11_PIN = 18;
+DHT_Async dht_sensor(DHT11_PIN, DHT_SENSOR_TYPE);
+
+float temperature;
+float humidity;
+float beat;
 
 #include <Wire.h>
 #include "MAX30100_PulseOximeter.h"
@@ -25,6 +32,7 @@ uint32_t timer = millis();
 #define BAUDRATE 115200
 #define REPORTING_PERIOD_MS 1000
 
+uint32_t tsLastReport = 0;
 // Variables to store the duration and distance
 long duration_1;
 int distance_1;
@@ -49,6 +57,7 @@ void setup() {
   
   pinMode(buzzer, OUTPUT);
   pinMode(LED, OUTPUT);
+
 
   Serial.print("Initializing pulse oximeter..");
     if (!pox.begin()) {
@@ -81,28 +90,34 @@ void setup() {
 void loop() {
    pox.update();
   unsigned long currentMillis = millis();
- 
+
   // Check if it's time to read sensors
   if (currentMillis - previousMillis >= interval) {
     // Save the last time we read the sensors
     previousMillis = currentMillis;
+  // Asynchronously dump heart rate and oxidation levels to the serial
+  // For both, a value of 0 means "invalid"
+  if (millis() - tsLastReport > REPORTING_PERIOD_MS) {
+  Serial.print("Heart rate:");
+    beat = pox.getHeartRate();
+  Serial.print(beat);
+  Serial.print("bpm / SpO2:");
+ Serial.print(pox.getSpO2());
+  Serial.println("%");
 
-    // Read heart rate sensor
-      Serial.print("\nHeart rate:");
-      Serial.print(pox.getHeartRate());
-      Serial.print("bpm / SpO2:");
-      Serial.print(pox.getSpO2());
-      Serial.println("%");
+    tsLastReport = millis();
+  }
+
+      /* Measure temperature and humidity.  If the functions returns
+       true, then a measurement is available. */
+  if (measure_environment(&temperature, &humidity)) {
+    Serial.print("T = ");
+    Serial.print(temperature, 1);
+    Serial.print(" deg. C, H = ");
+    Serial.print(humidity, 1);
+    Serial.println("%");
+  }
   
-    // Read DHT11 sensor
-    DHT.read(DHT11_PIN);
-    temp = DHT.temperature;
-    Serial.print("\nTemp:");
-    Serial.println(temp);
-    humi = DHT.humidity;
-    Serial.print("Humi:");
-    Serial.println(humi);
-    
     // Measure distance for sensor 1
     ultraSonic(trigPin_1, echoPin_1, duration_1, distance_1);
     // Print the distance to the Serial Monitor
@@ -161,6 +176,7 @@ void loop() {
         Serial.print("Altitude: "); Serial.println(GPS.altitude);
         Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
       }
+
   }
 }
 
@@ -184,7 +200,21 @@ void controlBuzzer(int dist_1, int dist_2) {
   }
 }
 
-void onBeatDetected()
-{
-    Serial.println("Beat!");
+// Callback (registered below) fired when a pulse is detected
+void onBeatDetected() {
+  Serial.println("Beat!");
+}
+
+static bool measure_environment(float* temperature, float* humidity) {
+  static unsigned long measurement_timestamp = millis();
+
+  /* Measure once every four seconds. */
+  if (millis() - measurement_timestamp > 4000ul) {
+    if (dht_sensor.measure(temperature, humidity)) {
+      measurement_timestamp = millis();
+      return (true);
+    }
+  }
+
+  return (false);
 }

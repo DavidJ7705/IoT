@@ -1,3 +1,6 @@
+//PROGRAM TO TEST HEART RATE SENSOR AND ASYNCRONOUS DHT11
+//2
+
 //libraries and header files needed
 #include <WiFi.h>
 #include "secrets.h"
@@ -6,10 +9,20 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 
-//dht11 files
-#include <DFRobot_DHT11.h>
-DFRobot_DHT11 DHT;
-#define DHT11_PIN 18
+//asynchronous dht11 
+#include <Arduino.h>
+#include "DHT_Async.h"
+#define DHT_SENSOR_TYPE DHT_TYPE_11
+static const int DHT_SENSOR_PIN = 18;
+DHT_Async dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
+float temperature;
+float humidity;
+
+//heart rate sensor 
+#include <Wire.h>
+#include "MAX30100_PulseOximeter.h"
+PulseOximeter pox;
+float beat;
 
 
 //gps files
@@ -20,7 +33,8 @@ Adafruit_GPS GPS(&GPSSerial);
 
 
 #define BAUDRATE 115200
-#define REPORTING_PERIOD_MS 20000 //report to thingspeak every 20s
+#define REPORTING_PERIOD_MS 15000 //report to thingspeak every 20s
+#define REPORTING_PERIOD_MS_THINGSPEAK 1000  // report to ThingSpeak every 20s
 
 // Variables to store the duration and distance for ultrasonic sensors
 long duration_1;
@@ -39,7 +53,7 @@ int longi_ts;
 
 //for looping the main every 2 seconds
 unsigned long previousMillis = 0; //execute the loop in void main only if the current time is - the last time readings were taken is greater than 2 seconds
-const long interval = 2000; // Interval in milliseconds
+const long interval = 1000; // Interval in milliseconds
 uint32_t timer = millis();
 
 //ssis and password for connecting esp32 to a network
@@ -49,10 +63,14 @@ char ssid[] = SECRET_SSID;   // your network SSID (name)
 char pass[] = SECRET_PASS;   // your network password
 int keyIndex = 0;            // your network key Index number (needed only for WEP)
 WiFiClient  client;
+WebServer server(80);
+
 
 //needed for thingspeak
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
+uint32_t tsLastReport = 0; //4 byte unsigned int to time thingspeak 20s
+uint32_t tsLastReportThingSpeak = 0;  //4 byte unsigned int to to time ThingSpeak 20s
 
 //different header files relating to the different sections of my webpage
 #include "about.h"
@@ -71,19 +89,17 @@ const int echoPin_2 = 4; //for ultrasonic 2, labeled with red on board
 const int buzzer = 2;
 const int LED = 0;
 
-String myStatus;  //setting status on thingspeak(not used)
+//String myStatus;  //setting status on thingspeak(not used)
  
-WebServer server(80);
- uint32_t tsLastReport = 0; //4 byte unsigned int to time thingspeak 20s
-
 //Functions for passing dht11 readings into webpage using strings
+
 int getTemp() {//type int as i was practicing typecasting 
-  int temp_int = DHT.temperature;
-  return temp_int;
+ // int temperature = DHT.temperature;
+  return temperature;
 }
 String getHumi(){
-  String humi_string = String(DHT.humidity);
-  return humi_string;
+  //String humidity = String(DHT.humidity);
+  return String(humidity);
 }
 
 //Making a tring out of longitude and latitude
@@ -200,9 +216,12 @@ void handleNotFound() {
   }
   server.send(404, "text/plain", message);
 }
- 
+
+
 void setup(void) {
   Serial.begin(115200);
+
+  delay(1000);
   WiFi.mode(WIFI_STA);
   ThingSpeak.begin(client);  // Initialize ThingSpeak
   WiFi.begin(hs_ssid, hs_password);
@@ -246,6 +265,7 @@ void setup(void) {
   pinMode(buzzer, OUTPUT);
   pinMode(LED, OUTPUT);
 
+
   // GPS
   Serial.println("Adafruit GPS library basic parsing test!");
   GPS.begin(9600);
@@ -257,40 +277,69 @@ void setup(void) {
   GPS.sendCommand(PGCMD_ANTENNA);
   delay(1000);
   GPSSerial.println(PMTK_Q_RELEASE);
+
+
+  //heart rate sensor inititation
+  // Register a callback for the beat detection
+   Serial.print("Initializing pulse oximeter..");
+
+  // Initialize the PulseOximeter instance
+  // Failures are generally due to an improper I2C wiring, missing power supply
+  // or wrong target chip
+  if (!pox.begin()) {
+    Serial.println("FAILED");
+    for (;;)
+      ;
+  } else {
+    Serial.println("SUCCESS");
+  }
+  pox.setOnBeatDetectedCallback(onBeatDetected);
+
 }
  
+/*
+ * Poll for a measurement, keeping the state machine alive.  Returns
+ * true if a measurement is available.
+ */
+static bool measure_environment(float* temperature, float* humidity) {
+  static unsigned long measurement_timestamp = millis();
+
+  /* Measure once every two seconds. */
+  if (millis() - measurement_timestamp > 2000ul) {
+    if (dht_sensor.measure(temperature, humidity)) {
+      measurement_timestamp = millis();
+      return (true);
+    }
+  }
+
+  return (false);
+}
+
+
+
 void loop(void) {
   unsigned long currentMillis = millis();
+  
+  // Make sure to call update as fast as possible
+  server.handleClient();
+  pox.update();
+
+  
+if (millis() - tsLastReportThingSpeak > REPORTING_PERIOD_MS_THINGSPEAK ) {
+  beat = pox.getHeartRate();
+
+
+    tsLastReportThingSpeak = millis();  //update the time stamp
+}
+
   if (currentMillis - previousMillis >= interval) {
     // Save the last time we read the sensors
     previousMillis = currentMillis;
-    
-    // Read DHT11 sensor
-    DHT.read(DHT11_PIN);
-    temp = DHT.temperature;
-    Serial.print("\nTemp:");
-    Serial.println(temp);
-    humi = DHT.humidity;
-    Serial.print("Humi:");
-    Serial.println(humi);
-    
-    // Measure distance for sensor 1
-    ultraSonic(trigPin_1, echoPin_1, duration_1, distance_1);
-    // Print the distance to the Serial Monitor
-    Serial.print("\nDistance 1: ");
-    Serial.print(distance_1);
-    Serial.println(" cm");
-
-    // Measure distance for sensor 2
-    ultraSonic(trigPin_2, echoPin_2, duration_2, distance_2);
-    // Print the distance to the Serial Monitor
-    Serial.print("Distance 2: ");
-    Serial.print(distance_2);
-    Serial.println(" cm");
 
     // Control buzzer and LED
     controlBuzzer(distance_1, distance_2);
   }
+
 
    // read data from the GPS in the 'main loop'
   char c = GPS.read();
@@ -308,6 +357,22 @@ void loop(void) {
   }
   // approximately every 2 seconds or so, print out the current stats
   if (millis() - timer > 2000) {
+  
+    // Measure distance for sensor 1
+    ultraSonic(trigPin_1, echoPin_1, duration_1, distance_1);
+    // Print the distance to the Serial Monitor
+    Serial.print("\nDistance 1: ");
+    Serial.print(distance_1);
+    Serial.print(" cm  /  ");
+
+    // Measure distance for sensor 2
+    ultraSonic(trigPin_2, echoPin_2, duration_2, distance_2);
+    // Print the distance to the Serial Monitor
+    Serial.print("Distance 2: ");
+    Serial.print(distance_2);
+    Serial.println(" cm");
+
+
     timer = millis(); // reset the timer
     Serial.print("\nTime: ");
     if (GPS.hour < 10) { Serial.print('0'); }
@@ -333,9 +398,9 @@ void loop(void) {
       Serial.print(GPS.latitude/100, 2); Serial.print(GPS.lat);
       Serial.print(", ");
       Serial.print(-GPS.longitude/100, 2); Serial.println(GPS.lon);
-      Serial.print("Speed (knots): "); Serial.println(GPS.speed);
-      Serial.print("Angle: "); Serial.println(GPS.angle);
-      Serial.print("Altitude: "); Serial.println(GPS.altitude);
+      //Serial.print("Speed (knots): "); Serial.println(GPS.speed);
+      //Serial.print("Angle: "); Serial.println(GPS.angle);
+     // Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
 
       //thingspeak values for longitude and latitude
@@ -343,24 +408,45 @@ void loop(void) {
       longi_ts = -GPS.longitude/100;
 
     }
-  }
-  
+  }  
 
-  server.handleClient();
-   if (millis () - tsLastReport > REPORTING_PERIOD_MS)
- {
-  ThingSpeak.setStatus(myStatus);
-  // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
-  ThingSpeak.setField(1,temp);
-  ThingSpeak.setField(2,humi);
+
+    if (measure_environment(&temperature, &humidity)) {
+    Serial.print("\nTemp:");
+    Serial.print(temperature, 1);
+    Serial.print("  Humi:");
+    Serial.print(humidity, 1);
+    Serial.println("%");
+  }
+
+    // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
+  ThingSpeak.setField(1,temperature);
+  ThingSpeak.setField(2,humidity);
   ThingSpeak.setField(3,lati_ts);
   ThingSpeak.setField(4,longi_ts);
 
-  // pieces of information in a channel.  Here, we write to field 1.
-  int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
+  updateTS();
+}
+
+void updateTS(){
+     if (millis () - tsLastReport > REPORTING_PERIOD_MS)
+ { pox.update();
+
+  // pieces of information in a channel.  Here, we write to field all the fields.
+ // int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);//this ,ine is the problem with max30100
   tsLastReport = millis();
   }
 }
+
+// Callback (registered below) fired when a pulse is detected
+void onBeatDetected() {
+  Serial.println("\nBeat!");
+    Serial.print(beat);
+  Serial.print("bpm / SpO2:");
+  Serial.print(pox.getSpO2());
+  Serial.println("%");
+}
+
 
 //fucntion allows for the 2 ultrasonics to be able to be read
 void ultraSonic(int trig, int echo, long &duration, int &distance) {
