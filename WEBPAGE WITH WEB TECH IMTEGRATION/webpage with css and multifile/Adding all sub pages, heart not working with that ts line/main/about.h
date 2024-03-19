@@ -10,7 +10,8 @@ const char htmlAbout[] PROGMEM = R"=====(
 
     <style>
  
- *{
+
+        *{
             margin: 0px;
             padding: 00px;
             box-sizing: border-box;
@@ -34,14 +35,14 @@ const char htmlAbout[] PROGMEM = R"=====(
             font: bold;
             font-size: 35px;
             font-family: Arial;
-            color: navy;
+            color: #173042;
             text-align: center;
         }
 
         p {
             font-size: 20px;
             font-family: Arial;
-            color: navy;
+            color: #36566D;
             text-align: center;
         }
 
@@ -68,6 +69,7 @@ const char htmlAbout[] PROGMEM = R"=====(
             border-left: 20px whitesmoke;
             background-color: rgb(226, 232, 236);
             overflow: hidden; /* Prevent content from overflowing */
+             position: relative; /* Relative positioning for absolute positioning */
         }
 
         #main {
@@ -282,7 +284,27 @@ const char htmlAbout[] PROGMEM = R"=====(
             margin-top: -9px;
         }
 
-       
+ .image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            display: block;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 </style>
 </head>
 
@@ -308,12 +330,27 @@ const char htmlAbout[] PROGMEM = R"=====(
     </ul>
   </div>
 
-  <br/><br/><br/><br/>
+<div id="main" class="main_body">
+            <div class="mainInner">
+                <div id="intro">
+                        <h1>About</h1>
+                        <br>
+                    <div style="width: 50%; text-align: right;">
+                        <p>Welcome to the about Page! This is for my IOT project.... smart motorcycle .</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <h1> ABOUT PAGE</h1>
-  <p>Hello! this is a test for webpage window about, has sidebar with access to other pages</p>
-  <iframe src="https://drive.google.com/file/d/1EQ8dlqYAdYePRaypsW80qOBFtAWExVb8/preview" width="640" height="480" allow="autoplay"></iframe>
-  <br/><br/><br/><br/><br/><br/><br/><br/>
+<div class="image-container">
+      <img src="https://d2dsc1gf0t80gb.cloudfront.net/wp-content/uploads/2018/07/25161020/Will-Broadhead-Bikeshed-Cafe-Racer-Cup-20-1000x667.jpg" width="540" height="580">
+      <div class="text-overlay">
+          <h1>Smart Motorcycle</h1>
+          <p>Welcome to the about Page! This is for my IOT project.... smart motorcycle.</p>
+      </div>
+  </div>
+
+<img src="https://i.redd.it/7gvigychukyb1.jpg" width="440" height="280"> <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© ABOUT </div>
 <script>
     function toggleFeatures() {

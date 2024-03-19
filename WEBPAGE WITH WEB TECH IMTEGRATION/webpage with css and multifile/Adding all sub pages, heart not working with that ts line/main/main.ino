@@ -1,5 +1,7 @@
 //PROGRAM TO TEST HEART RATE SENSOR AND ASYNCRONOUS DHT11
 //2
+//STEM cycle
+//Safe Tracking Electronics Motorcycle
 
 //libraries and header files needed
 #include <WiFi.h>

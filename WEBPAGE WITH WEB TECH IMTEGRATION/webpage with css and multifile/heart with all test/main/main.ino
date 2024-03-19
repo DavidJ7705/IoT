@@ -448,4 +448,39 @@ if (millis() - tsLastReportThingSpeak > REPORTING_PERIOD_MS_THINGSPEAK ) {
 
 // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
   ThingSpeak.setField(1,temp);
- 
+  ThingSpeak.setField(2,humi);
+  ThingSpeak.setField(3,lati_ts);
+  ThingSpeak.setField(4,longi_ts);
+
+   if (millis () - tsLastReport > REPORTING_PERIOD_MS)
+ { pox.update();
+  // pieces of information in a channel.  Here, we write to field all the fields.
+  int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
+  tsLastReport = millis();
+  }
+
+}
+
+
+//fucntion allows for the 2 ultrasonics to be able to be read
+void ultraSonic(int trig, int echo, long &duration, int &distance) {
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+  duration = pulseIn(echo, HIGH);
+  distance = duration * 0.0343 / 2;
+}
+
+
+
+void controlBuzzer(int dist_1, int dist_2) {
+  if (dist_1 < 30 || dist_2 < 30) {
+    digitalWrite(buzzer, HIGH);
+    digitalWrite(LED, HIGH);
+  } else {
+    digitalWrite(buzzer, LOW);
+    digitalWrite(LED, LOW);
+  }
+}
