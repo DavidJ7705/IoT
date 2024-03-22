@@ -1,13 +1,11 @@
-const char htmlDHT11[] PROGMEM = R"=====(
+const char htmlGPS[] PROGMEM = R"=====(
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="15">
-        <meta http-equiv="refresh" content="1"> <!-- Add this line to update every second -->
-
-    <title>DHT11 PAGE FOR SERVER</title>
+        <meta http-equiv="refresh" content="15">
+    <title>GPS PAGE FOR SERVER</title>
     <style>
  
         *{
@@ -282,21 +280,8 @@ const char htmlDHT11[] PROGMEM = R"=====(
             margin-top: -9px;
         }
 
-        .frame-container {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .frame {
-            width: 90%;
-            margin: 0 auto;
-            margin-bottom: 20px;
-            border: 1px solid #cccccc;
-        }
-
-</style>
+       
+    </style>
 </head>
 
 <body>
@@ -322,16 +307,17 @@ const char htmlDHT11[] PROGMEM = R"=====(
         </span>
       </li>
     </ul>
-  </div>)=====";
+  </div>
+  )=====";
 
-String dht_homePagePart1 = F(R"=====(
-  <div id="main" class="main_body">
+String gps_homePagePart1 = F(R"=====(
+        <div id="main" class="main_body">
             <div class="mainInner">
                 <div id="intro">
-                        <h1>DHT11 PAGE</h1>
+                        <h1>GPS PAGE</h1>
                         <br>
                     <div style="width: 50%; text-align: right;">
-                        <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
+                        <p>Welcome to the GPS Page! Here, you can view GPS data in real-time. The Ultimate GPS V3 module is used to achieve this.</p>
                     </div>
                 </div>
             </div>
@@ -350,42 +336,41 @@ String dht_homePagePart1 = F(R"=====(
  
  <tr>
  
- <td>Temperature</td>
+ <td>Latitude</td>
  
  <td>)=====");
 
- String dht_homePagePart2 = F(R"=====(</td>
+ String gps_homePagePart2 = F(R"=====(</td>
  
- <td>Degree Cel</td>
+ <td>N</td>
  
  </tr>
  
  <tr>
- 
- <td>Humidity</td>
+
+ <td>Longitude</td>
  
  <td>)=====");
 
-String dht_homePagePart3 = F(R"=====(</td>
+  
+String gps_homePagePart3 = F(R"=====(</td>
  
- <td>L</td>
+ <td>W</td>
  
  </tr>
  
  </table>
  
- </div>
+ </div>)=====");
 
-    <div class="frame-container">
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=TEMPERATURE&type=spline"></iframe>
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=HUMIDITY&type=spline"></iframe>
-    </div>
+String gps_homePagePart4 = F(R"=====(<p> 
+Open Google maps Link</p>)=====");
 
-    <br/><br/><br/><br/><br/><br/><br/><br/>
+String gps_homePagePart5 = F(R"=====(
+
 <div id="footer-div">© DHT11 </div>
-   </div>
 
-      <script>
+<script>
     function toggleFeatures() {
       var subMenu = document.getElementById("featuresSubMenu");
       subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
@@ -393,6 +378,4 @@ String dht_homePagePart3 = F(R"=====(</td>
   </script>
 </body>
 
-</html>
-
-)=====";
+</html>)=====");

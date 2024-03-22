@@ -1,19 +1,15 @@
-const char htmlDHT11[] PROGMEM = R"=====(
+const char htmlFeatures[] PROGMEM = R"=====(
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="15">
-        <meta http-equiv="refresh" content="1"> <!-- Add this line to update every second -->
-
-    <title>DHT11 PAGE FOR SERVER</title>
+    <title>FEATURES PAGE FOR SERVER</title>
     <style>
  
         *{
             margin: 0px;
             padding: 00px;
-            box-sizing: border-box;
             font-family: Verdana, Tahoma, sans-serif;
         }
 
@@ -32,16 +28,16 @@ const char htmlDHT11[] PROGMEM = R"=====(
 
         h1 {
             font: bold;
-            font-size: 35px;
+            font-size: 40px;
             font-family: Arial;
-            color: #173042;
+            color: navy;
             text-align: center;
         }
 
         p {
-            font-size: 20px;
+            font-size: 25px;
             font-family: Arial;
-            color: #36566D;
+            color: navy;
             text-align: center;
         }
 
@@ -59,23 +55,39 @@ const char htmlDHT11[] PROGMEM = R"=====(
         }
 
         #intro {
-            width: 100%;
-             max-width: 1200px; /* Set maximum width */
+            width: 60%;
             font-family: Verdana, Tahoma, sans-serif;
-            min-height: 50px;
-            padding:20px;
-            border-right: 20px whitesmoke;
-            border-left: 20px whitesmoke;
+            min-height: 300px;
+            padding-left: 10px;
+            padding-top: 10px;
+            margin-left: 300px;
+            margin-right: 20px;
+            border-right: 10px whitesmoke;
             background-color: rgb(226, 232, 236);
-            overflow: hidden; /* Prevent content from overflowing */
+            float: center;
+            border-radius: 10px;
         }
 
         #main {
             width: 100%;
-            min-height: 50px;
+            min-height: 300px;
             background-color: rgb(255, 255, 255);
             margin-bottom: 10px;
             border: 10px solid rgb(255, 255, 255);
+        }
+
+        #side-div {
+            width: 99.5%;
+            padding-left: 10px;
+            min-height: 300px;
+            font-size: 13px;
+            line-height: 50px;
+            text-align: left;
+            background-color: #33475b;
+            border-radius: 10px;
+            color: white;
+            font-family: Avenir;
+            float: left;
         }
 
         #footer-div {
@@ -137,7 +149,7 @@ const char htmlDHT11[] PROGMEM = R"=====(
             margin: 0 auto;
             display: block;
             height: 100%;
-            margin-top: 60px; /* Adjusted to accommodate the fixed navbar */
+            margin-top: 120px; /* Adjusted to accommodate the fixed navbar */
         }
 
         .mainInner {
@@ -281,22 +293,7 @@ const char htmlDHT11[] PROGMEM = R"=====(
             transform: rotate(-135deg);
             margin-top: -9px;
         }
-
-        .frame-container {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .frame {
-            width: 90%;
-            margin: 0 auto;
-            margin-bottom: 20px;
-            border: 1px solid #cccccc;
-        }
-
-</style>
+    </style>
 </head>
 
 <body>
@@ -322,68 +319,16 @@ const char htmlDHT11[] PROGMEM = R"=====(
         </span>
       </li>
     </ul>
-  </div>)=====";
+  </div>
 
-String dht_homePagePart1 = F(R"=====(
-  <div id="main" class="main_body">
-            <div class="mainInner">
-                <div id="intro">
-                        <h1>DHT11 PAGE</h1>
-                        <br>
-                    <div style="width: 50%; text-align: right;">
-                        <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
- <table>
- 
- <tr>
- 
- <th>Sensor</th>
- 
- <th>Value</th>
- 
- <th>Unit</th>
- 
- </tr>
- 
- <tr>
- 
- <td>Temperature</td>
- 
- <td>)=====");
+        <br/><br/><br/><br/>
+        <h1> FEATURES PAGE</h1>
+  
+        <p>Hello! this is a test for webpage window features, has sidebar with access to other pages</p>
 
- String dht_homePagePart2 = F(R"=====(</td>
- 
- <td>Degree Cel</td>
- 
- </tr>
- 
- <tr>
- 
- <td>Humidity</td>
- 
- <td>)=====");
-
-String dht_homePagePart3 = F(R"=====(</td>
- 
- <td>L</td>
- 
- </tr>
- 
- </table>
- 
- </div>
-
-    <div class="frame-container">
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=TEMPERATURE&type=spline"></iframe>
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=HUMIDITY&type=spline"></iframe>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        <div id="footer-div">© FEATURES </div>
     </div>
-
-    <br/><br/><br/><br/><br/><br/><br/><br/>
-<div id="footer-div">© DHT11 </div>
-   </div>
 
       <script>
     function toggleFeatures() {

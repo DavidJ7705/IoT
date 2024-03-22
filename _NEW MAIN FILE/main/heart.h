@@ -1,13 +1,11 @@
-const char htmlDHT11[] PROGMEM = R"=====(
+const char htmlHEART[] PROGMEM = R"=====(
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="15">
-        <meta http-equiv="refresh" content="1"> <!-- Add this line to update every second -->
-
-    <title>DHT11 PAGE FOR SERVER</title>
+    <title>Heart rate sensor PAGE FOR SERVER</title>
     <style>
  
         *{
@@ -300,7 +298,7 @@ const char htmlDHT11[] PROGMEM = R"=====(
 </head>
 
 <body>
-  <div class="flex-Container">
+      <div class="flex-Container">
       <div class="header"></div>
       <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
       <label for="openSidebarMenu" class="sidebarIconToggle">
@@ -324,11 +322,11 @@ const char htmlDHT11[] PROGMEM = R"=====(
     </ul>
   </div>)=====";
 
-String dht_homePagePart1 = F(R"=====(
+String heart_homePagePart1 = F(R"=====(
   <div id="main" class="main_body">
             <div class="mainInner">
                 <div id="intro">
-                        <h1>DHT11 PAGE</h1>
+                        <h1>HEART PAPE PAGE</h1>
                         <br>
                     <div style="width: 50%; text-align: right;">
                         <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
@@ -354,7 +352,7 @@ String dht_homePagePart1 = F(R"=====(
  
  <td>)=====");
 
- String dht_homePagePart2 = F(R"=====(</td>
+ String heart_homePagePart2 = F(R"=====(</td>
  
  <td>Degree Cel</td>
  
@@ -366,7 +364,7 @@ String dht_homePagePart1 = F(R"=====(
  
  <td>)=====");
 
-String dht_homePagePart3 = F(R"=====(</td>
+String heart_homePagePart3 = F(R"=====(</td>
  
  <td>L</td>
  
@@ -383,16 +381,14 @@ String dht_homePagePart3 = F(R"=====(</td>
 
     <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© DHT11 </div>
-   </div>
 
-      <script>
+<script>
     function toggleFeatures() {
       var subMenu = document.getElementById("featuresSubMenu");
       subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
     }
   </script>
+
 </body>
 
-</html>
-
-)=====";
+</html>)=====");

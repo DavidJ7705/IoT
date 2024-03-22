@@ -1,13 +1,11 @@
-const char htmlDHT11[] PROGMEM = R"=====(
+const char htmlULTRASONIC[] PROGMEM = R"=====(
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="15">
-        <meta http-equiv="refresh" content="1"> <!-- Add this line to update every second -->
-
-    <title>DHT11 PAGE FOR SERVER</title>
+    <title>ultrasonic page PAGE FOR SERVER</title>
     <style>
  
         *{
@@ -324,11 +322,11 @@ const char htmlDHT11[] PROGMEM = R"=====(
     </ul>
   </div>)=====";
 
-String dht_homePagePart1 = F(R"=====(
+String ultrasonic_homePagePart1 = F(R"=====(
   <div id="main" class="main_body">
             <div class="mainInner">
                 <div id="intro">
-                        <h1>DHT11 PAGE</h1>
+                        <h1>ultrasonics</h1>
                         <br>
                     <div style="width: 50%; text-align: right;">
                         <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
@@ -350,25 +348,25 @@ String dht_homePagePart1 = F(R"=====(
  
  <tr>
  
- <td>Temperature</td>
+ <td>1</td>
  
  <td>)=====");
 
- String dht_homePagePart2 = F(R"=====(</td>
+ String ultrasonic_homePagePart2 = F(R"=====(</td>
  
- <td>Degree Cel</td>
+ <td>cm</td>
  
  </tr>
  
  <tr>
  
- <td>Humidity</td>
+ <td>2</td>
  
  <td>)=====");
 
-String dht_homePagePart3 = F(R"=====(</td>
+String ultrasonic_homePagePart3 = F(R"=====(</td>
  
- <td>L</td>
+ <td>cm</td>
  
  </tr>
  
@@ -377,22 +375,19 @@ String dht_homePagePart3 = F(R"=====(</td>
  </div>
 
     <div class="frame-container">
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=TEMPERATURE&type=spline"></iframe>
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=HUMIDITY&type=spline"></iframe>
+        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=DISTANCE+1&type=line&yaxis=Distance+%28cm%29"></iframe>
+        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=DISTANCE+2&type=line&yaxis=Distance+%28cm%29"></iframe>
     </div>
 
     <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© DHT11 </div>
-   </div>
 
-      <script>
+<script>
     function toggleFeatures() {
       var subMenu = document.getElementById("featuresSubMenu");
       subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
     }
   </script>
+
 </body>
-
-</html>
-
-)=====";
+</html>)=====");

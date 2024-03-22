@@ -1,16 +1,16 @@
-const char htmlDHT11[] PROGMEM = R"=====(
+const char htmlAbout[] PROGMEM = R"=====(
 <html>
 
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="15">
-        <meta http-equiv="refresh" content="1"> <!-- Add this line to update every second -->
+        <meta http-equiv="refresh" content="45">
 
-    <title>DHT11 PAGE FOR SERVER</title>
+    <title>ABOUT</title>
+
     <style>
  
-        *{
+ *{
             margin: 0px;
             padding: 00px;
             box-sizing: border-box;
@@ -34,14 +34,14 @@ const char htmlDHT11[] PROGMEM = R"=====(
             font: bold;
             font-size: 35px;
             font-family: Arial;
-            color: #173042;
+            color: navy;
             text-align: center;
         }
 
         p {
             font-size: 20px;
             font-family: Arial;
-            color: #36566D;
+            color: navy;
             text-align: center;
         }
 
@@ -282,20 +282,7 @@ const char htmlDHT11[] PROGMEM = R"=====(
             margin-top: -9px;
         }
 
-        .frame-container {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .frame {
-            width: 90%;
-            margin: 0 auto;
-            margin-bottom: 20px;
-            border: 1px solid #cccccc;
-        }
-
+       
 </style>
 </head>
 
@@ -308,7 +295,6 @@ const char htmlDHT11[] PROGMEM = R"=====(
       <div class="spinner horizontal"></div>
     <div class="spinner diagonal part-2"></div>
   </label>
-
     <div id="sidebarMenu">
     <ul class="sidebarMenuInner">
       <li><a href="/" role="button">ABOUT</a></li>
@@ -317,75 +303,19 @@ const char htmlDHT11[] PROGMEM = R"=====(
         <span id="featuresSubMenu" style="display: none;">
           <a href="/dht11" role="button">DHT11</a>
           <a href="/gps" role="button">GPS</a>
-          <a href="/heart" role="button">HEART</a>
-          <a href="/ultrasonic" role="button">ULTRASONICS</a>
         </span>
       </li>
     </ul>
-  </div>)=====";
+  </div>
 
-String dht_homePagePart1 = F(R"=====(
-  <div id="main" class="main_body">
-            <div class="mainInner">
-                <div id="intro">
-                        <h1>DHT11 PAGE</h1>
-                        <br>
-                    <div style="width: 50%; text-align: right;">
-                        <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
- <table>
- 
- <tr>
- 
- <th>Sensor</th>
- 
- <th>Value</th>
- 
- <th>Unit</th>
- 
- </tr>
- 
- <tr>
- 
- <td>Temperature</td>
- 
- <td>)=====");
+  <br/><br/><br/><br/>
 
- String dht_homePagePart2 = F(R"=====(</td>
- 
- <td>Degree Cel</td>
- 
- </tr>
- 
- <tr>
- 
- <td>Humidity</td>
- 
- <td>)=====");
-
-String dht_homePagePart3 = F(R"=====(</td>
- 
- <td>L</td>
- 
- </tr>
- 
- </table>
- 
- </div>
-
-    <div class="frame-container">
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=TEMPERATURE&type=spline"></iframe>
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=HUMIDITY&type=spline"></iframe>
-    </div>
-
-    <br/><br/><br/><br/><br/><br/><br/><br/>
-<div id="footer-div">© DHT11 </div>
-   </div>
-
-      <script>
+  <h1> ABOUT PAGE</h1>
+  <p>Hello! this is a test for webpage window about, has sidebar with access to other pages</p>
+  <iframe src="https://drive.google.com/file/d/1EQ8dlqYAdYePRaypsW80qOBFtAWExVb8/preview" width="640" height="480" allow="autoplay"></iframe>
+  <br/><br/><br/><br/><br/><br/><br/><br/>
+<div id="footer-div">© ABOUT </div>
+<script>
     function toggleFeatures() {
       var subMenu = document.getElementById("featuresSubMenu");
       subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
@@ -394,5 +324,4 @@ String dht_homePagePart3 = F(R"=====(</td>
 </body>
 
 </html>
-
 )=====";

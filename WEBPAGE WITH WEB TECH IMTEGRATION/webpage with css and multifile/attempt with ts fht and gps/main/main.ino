@@ -21,6 +21,7 @@ Adafruit_GPS GPS(&GPSSerial);
 
 #define BAUDRATE 115200
 #define REPORTING_PERIOD_MS 20000 //report to thingspeak every 20s
+uint32_t timer = millis();
 
 // Variables to store the duration and distance for ultrasonic sensors
 long duration_1;
@@ -40,7 +41,7 @@ int longi_ts;
 //for looping the main every 2 seconds
 unsigned long previousMillis = 0; //execute the loop in void main only if the current time is - the last time readings were taken is greater than 2 seconds
 const long interval = 2000; // Interval in milliseconds
-uint32_t timer = millis();
+
 
 //ssis and password for connecting esp32 to a network
 const char* hs_ssid = "LaPhone"; //hot spot phone name  

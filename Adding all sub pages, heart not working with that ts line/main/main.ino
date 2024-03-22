@@ -1,5 +1,7 @@
-//PROGRAM TO TEST HEART RATE SENSOR AND ASYNCRONOUS DHT11
-//2
+//NEW MAIN FILE, All working code
+//
+//STEM cycle
+//Safe Tracking Electronics Motorcycle
 
 //libraries and header files needed
 #include <WiFi.h>
@@ -447,16 +449,34 @@ if (millis() - tsLastReportThingSpeak > REPORTING_PERIOD_MS_THINGSPEAK ) {
   ThingSpeak.setField(2,humidity);
   ThingSpeak.setField(3,distance_1);
   ThingSpeak.setField(4,distance_2);
+  ThingSpeak.setField(5,beat);
 
+//calling funcion to update thingspeak every 20 seconds
   updateTS();
+
 }
 
+
+//Functions 
+
+//function to update thingspeak
 void updateTS(){
      if (millis () - tsLastReport > REPORTING_PERIOD_MS)
- { pox.update();
-
+ {
+  if (humidity>=75){
+    Serial.println("\nRoads may be slippery!!\n Proceed with caution.");
+  }
   // pieces of information in a channel.  Here, we write to field all the fields.
  int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);//this ,ine is the problem with max30100
+       if (!pox.begin()) {
+    Serial.println("FAILED");
+    for (;;)
+      ;
+  } else {
+    Serial.println("SUCCESS");
+  }
+ pox.setOnBeatDetectedCallback(onBeatDetected);
+pox.update();
   tsLastReport = millis();
   }
 }
@@ -483,7 +503,7 @@ void ultraSonic(int trig, int echo, long &duration, int &distance) {
 }
 
 
-
+//function controls buzzer when distance gathered is below 30
 void controlBuzzer(int dist_1, int dist_2) {
   if (dist_1 < 30 || dist_2 < 30) {
     digitalWrite(buzzer, HIGH);
@@ -493,3 +513,5 @@ void controlBuzzer(int dist_1, int dist_2) {
     digitalWrite(LED, LOW);
   }
 }
+
+

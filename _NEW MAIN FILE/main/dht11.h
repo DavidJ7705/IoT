@@ -5,8 +5,6 @@ const char htmlDHT11[] PROGMEM = R"=====(
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="15">
-        <meta http-equiv="refresh" content="1"> <!-- Add this line to update every second -->
-
     <title>DHT11 PAGE FOR SERVER</title>
     <style>
  
@@ -383,16 +381,14 @@ String dht_homePagePart3 = F(R"=====(</td>
 
     <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© DHT11 </div>
-   </div>
 
-      <script>
+<script>
     function toggleFeatures() {
       var subMenu = document.getElementById("featuresSubMenu");
       subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
     }
   </script>
+
 </body>
 
-</html>
-
-)=====";
+</html>)=====");
