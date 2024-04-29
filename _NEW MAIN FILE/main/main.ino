@@ -1,6 +1,6 @@
 //PROGRAM TO TEST HEART RATE SENSOR AND ASYNCRONOUS DHT11
 //2
-
+//main file
 //libraries and header files needed
 #include <WiFi.h>
 #include "secrets.h"
@@ -24,7 +24,7 @@
 #include <Arduino.h>
 #include "DHT_Async.h"
 #define DHT_SENSOR_TYPE DHT_TYPE_11
-static const int DHT_SENSOR_PIN = 18;
+static const int DHT_SENSOR_PIN = 19;
 DHT_Async dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE);
 float temperature;
 float humidity;
@@ -49,7 +49,7 @@ Adafruit_GPS GPS(&GPSSerial);
 
 // Variables to store the duration and distance for ultrasonic sensors
 long duration_1;
-int distance_1;  //for ultrasonic q
+int distance_1;  //for ultrasonic 1
 
 long duration_2;
 int distance_2;  //for ultrasonic 2
@@ -85,10 +85,10 @@ uint32_t tsLastReportThingSpeak = 0;  //4 byte unsigned int to to time ThingSpea
 
 // Define the pins for the ultrasonic sensor
 const int trigPin_1 = 15;
-const int echoPin_1 = 13;  //for ultrasonic 1, labeled with blue on board
+const int echoPin_1 = 4;  //for ultrasonic 1, labeled with blue on board 4
 
 const int trigPin_2 = 5;
-const int echoPin_2 = 4;  //for ultrasonic 2, labeled with red on board
+const int echoPin_2 = 25;  //for ultrasonic 2, labeled with red on board 13
 
 const int buzzer = 2;
 const int LED = 0;
@@ -117,6 +117,9 @@ int getDist_2() {
 String getHeart(){
   return String(beat);
 }
+String getSPo2(){
+  return String(pox.getSpO2());
+}
 
 
 //Making a tring out of longitude and latitude
@@ -132,7 +135,7 @@ String getLongi() {
   longi_dec = longi_dec / 0.6;
   longi_v2 = longi_int + longi_dec;
 
-  String longi = String(-longi_v2, 2);
+  String longi = String(-longi_v2, 6);
   return longi;
 }
 
@@ -149,7 +152,7 @@ String getLati() {
   lati_dec = lati_dec / 0.6;
   lati_v2 = lati_int + lati_dec;
 
-  lati = String(lati_v2, 2);
+  lati = String(lati_v2, 6);
   return lati;
 }
 
@@ -219,8 +222,7 @@ void handleGPS() {
   //this will let us view the map location on the webpage without clicking the link
   String lat = getLati();
   String lon = getLongi();
-
-  String iframe = "<center> <iframe width=\"350\" height=\"250\" frameborder=\"0\" style=\"border:0\" referrerpolicy=\"no-referrer-when-downgrade\" src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyAn7COqk8b29M1GINRhM_fWCwLQpPkTsbI&zoom=14&q=" + lat + "," + lon + "\" allowfullscreen></iframe></center>";
+  String iframe = "<center> <iframe width=\"450\" height=\"350\" frameborder=\"1\" style=\"border:1\" referrerpolicy=\"no-referrer-when-downgrade\" src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyAn7COqk8b29M1GINRhM_fWCwLQpPkTsbI&zoom=14&q=" + lat + "," + lon + "\" allowfullscreen></iframe></center>";
 
   String message = htmlGPS + gps_homePagePart1 + getLati() + gps_homePagePart2 + getLongi() + gps_homePagePart3 + "<a href='" + getGoogle() + "'>" + gps_homePagePart4 + "</a><br><br>" + iframe + "<br><br>" + gps_homePagePart5;
   server.send(200, "text/html", message);
@@ -229,7 +231,7 @@ void handleGPS() {
 
 void handleHEART() {
   Serial.println("GET /heart");
-  String message = htmlHEART + heart_homePagePart1 + String(getTemp()) + heart_homePagePart2 + getHumi() + heart_homePagePart3;
+  String message = htmlHEART + heart_homePagePart1 + String(getHeart()) + heart_homePagePart2 + String(getSPo2()) + heart_homePagePart3;
   server.send(200, "text/html", message);
 }
 
@@ -324,8 +326,6 @@ void setup(void) {
   Serial.print("Initializing pulse oximeter..");
 
   // Initialize the PulseOximeter instance
-  // Failures are generally due to an improper I2C wiring, missing power supply
-  // or wrong target chip
   if (!pox.begin()) {
     Serial.println("FAILED");
     for (;;)
@@ -483,7 +483,7 @@ void updateTS() {
   if (millis() - tsLastReport > REPORTING_PERIOD_MS) {
 
     if (humidity >= 75) {
-      Serial.println("\nRoads may be slippery!!\n Proceed with caution.");
+      Serial.println("\nRoads may be slippery!!\nProceed with caution.");
     }
 
     // pieces of information in a channel.  Here, we write to field all the fields.
@@ -493,7 +493,7 @@ void updateTS() {
       Serial.println("FAILED");
       for (;;)
         ;
-    } else {
+    } else { 
       Serial.println("SUCCESS");
     }
 
@@ -530,9 +530,10 @@ void ultraSonic(int trig, int echo, long& duration, int& distance) {
 
 //controls buzzer and LED if distance gathered is less than 30cm
 void controlBuzzer(int dist_1, int dist_2) {
-  if (dist_1 < 30 || dist_2 < 30) {
+  if (dist_1 < 20 || dist_2 < 20) {
     digitalWrite(buzzer, HIGH);
     digitalWrite(LED, HIGH);
+    Serial.println("Object Detected");
   } else {
     digitalWrite(buzzer, LOW);
     digitalWrite(LED, LOW);

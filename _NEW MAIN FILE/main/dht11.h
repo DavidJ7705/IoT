@@ -7,7 +7,7 @@ const char htmlDHT11[] PROGMEM = R"=====(
     <meta http-equiv="refresh" content="15">
     <title>DHT11 PAGE FOR SERVER</title>
     <style>
- 
+
         *{
             margin: 0px;
             padding: 00px;
@@ -30,22 +30,33 @@ const char htmlDHT11[] PROGMEM = R"=====(
 
         h1 {
             font: bold;
-            font-size: 35px;
+            font-size: 39px;
             font-family: Arial;
             color: #173042;
             text-align: center;
         }
 
         p {
-            font-size: 20px;
+            font-size: 24px;
             font-family: Arial;
             color: #36566D;
             text-align: center;
         }
-
-        th, td {
-            font-size: 25px;
+        th{
+            font: bold;
+            font-size: 34 px;
+            font-family: Arial;
             padding: 8px;
+            color: #173042;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            font-size: 29px;
+            font-family: Arial;
+            padding: 8px;
+            color: #36566D;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -298,7 +309,6 @@ const char htmlDHT11[] PROGMEM = R"=====(
 </head>
 
 <body>
-  <div class="flex-Container">
       <div class="header"></div>
       <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
       <label for="openSidebarMenu" class="sidebarIconToggle">
@@ -323,17 +333,22 @@ const char htmlDHT11[] PROGMEM = R"=====(
   </div>)=====";
 
 String dht_homePagePart1 = F(R"=====(
+    <div class="flex-Container">
+
   <div id="main" class="main_body">
             <div class="mainInner">
                 <div id="intro">
-                        <h1>DHT11 PAGE</h1>
+                        <h1>DHT11</h1>
                         <br>
                     <div style="width: 50%; text-align: right;">
                         <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
                     </div>
                 </div>
             </div>
-        </div>
+  </div>
+  </div>
+      <br/><br/>
+              <center>
  <table>
  
  <tr>
@@ -352,7 +367,7 @@ String dht_homePagePart1 = F(R"=====(
  
  <td>)=====");
 
- String dht_homePagePart2 = F(R"=====(</td>
+String dht_homePagePart2 = F(R"=====(</td>
  
  <td>Degree Cel</td>
  
@@ -371,13 +386,19 @@ String dht_homePagePart3 = F(R"=====(</td>
  </tr>
  
  </table>
- 
- </div>
+     <br/><br/>
+</center>
+     <div class="flex-Container">
+    <div id="intro">
 
     <div class="frame-container">
         <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=TEMPERATURE&type=spline"></iframe>
         <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=HUMIDITY&type=spline"></iframe>
     </div>
+    <br/>
+        </div>
+
+</div>
 
     <br/><br/><br/><br/><br/><br/><br/><br/>
 <div id="footer-div">© DHT11 </div>

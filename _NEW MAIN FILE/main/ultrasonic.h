@@ -7,7 +7,7 @@ const char htmlULTRASONIC[] PROGMEM = R"=====(
     <meta http-equiv="refresh" content="15">
     <title>ultrasonic page PAGE FOR SERVER</title>
     <style>
- 
+
         *{
             margin: 0px;
             padding: 00px;
@@ -30,22 +30,33 @@ const char htmlULTRASONIC[] PROGMEM = R"=====(
 
         h1 {
             font: bold;
-            font-size: 35px;
+            font-size: 39px;
             font-family: Arial;
             color: #173042;
             text-align: center;
         }
 
         p {
-            font-size: 20px;
+            font-size: 24px;
             font-family: Arial;
             color: #36566D;
             text-align: center;
         }
-
-        th, td {
-            font-size: 25px;
+        th{
+            font: bold;
+            font-size: 34 px;
+            font-family: Arial;
             padding: 8px;
+            color: #173042;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            font-size: 29px;
+            font-family: Arial;
+            padding: 8px;
+            color: #36566D;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -326,10 +337,10 @@ String ultrasonic_homePagePart1 = F(R"=====(
   <div id="main" class="main_body">
             <div class="mainInner">
                 <div id="intro">
-                        <h1>ultrasonics</h1>
+                        <h1>ULTRASONIC SENSORS</h1>
                         <br>
                     <div style="width: 50%; text-align: right;">
-                        <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
+                        <p>This page simulates retrieving distances of objects or vehicles that come close-by using ultrasonic sensors. We can see the live reuslts on the graph below!</p>
                     </div>
                 </div>
             </div>
@@ -371,15 +382,20 @@ String ultrasonic_homePagePart3 = F(R"=====(</td>
  </tr>
  
  </table>
- 
+ <br/>
  </div>
 
+     <div class="flex-Container">
+                     <div id="intro">
+
     <div class="frame-container">
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=DISTANCE+1&type=line&yaxis=Distance+%28cm%29"></iframe>
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=DISTANCE+2&type=line&yaxis=Distance+%28cm%29"></iframe>
+        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=DISTANCE+1&type=spline&yaxis=Distance+%28cm%29"></iframe>
+        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=DISTANCE+2&type=spline&yaxis=Distance+%28cm%29"></iframe>
     </div>
 
-    <br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+        </div>
+    <br/><br/>
 <div id="footer-div">© DHT11 </div>
 
 <script>

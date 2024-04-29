@@ -7,7 +7,7 @@ const char htmlGPS[] PROGMEM = R"=====(
         <meta http-equiv="refresh" content="15">
     <title>GPS PAGE FOR SERVER</title>
     <style>
- 
+
         *{
             margin: 0px;
             padding: 00px;
@@ -30,22 +30,33 @@ const char htmlGPS[] PROGMEM = R"=====(
 
         h1 {
             font: bold;
-            font-size: 35px;
+            font-size: 39px;
             font-family: Arial;
             color: #173042;
             text-align: center;
         }
 
         p {
-            font-size: 20px;
+            font-size: 24px;
             font-family: Arial;
             color: #36566D;
             text-align: center;
         }
-
-        th, td {
-            font-size: 25px;
+        th{
+            font: bold;
+            font-size: 34 px;
+            font-family: Arial;
             padding: 8px;
+            color: #173042;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            font-size: 29px;
+            font-family: Arial;
+            padding: 8px;
+            color: #36566D;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -314,7 +325,7 @@ String gps_homePagePart1 = F(R"=====(
         <div id="main" class="main_body">
             <div class="mainInner">
                 <div id="intro">
-                        <h1>GPS PAGE</h1>
+                        <h1>GPS</h1>
                         <br>
                     <div style="width: 50%; text-align: right;">
                         <p>Welcome to the GPS Page! Here, you can view GPS data in real-time. The Ultimate GPS V3 module is used to achieve this.</p>
@@ -363,11 +374,21 @@ String gps_homePagePart3 = F(R"=====(</td>
  
  </div>)=====");
 
-String gps_homePagePart4 = F(R"=====(<p> 
-Open Google maps Link</p>)=====");
+String gps_homePagePart4 = F(R"=====(
+   <br/><br/>
+   <p> 
+Open Google maps Link</p>
+   <br/><br/>
+     <div class="flex-Container">
+
+                     <div id="intro">
+
+)=====");
 
 String gps_homePagePart5 = F(R"=====(
-
+</div>
+</div>
+    <br/><br/>
 <div id="footer-div">© DHT11 </div>
 
 <script>

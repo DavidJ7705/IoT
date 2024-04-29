@@ -10,7 +10,7 @@ const char htmlAbout[] PROGMEM = R"=====(
 
     <style>
  
- *{
+        *{
             margin: 0px;
             padding: 00px;
             box-sizing: border-box;
@@ -32,16 +32,16 @@ const char htmlAbout[] PROGMEM = R"=====(
 
         h1 {
             font: bold;
-            font-size: 35px;
+            font-size: 32px;
             font-family: Arial;
-            color: navy;
+            color: #173042;
             text-align: center;
         }
 
         p {
-            font-size: 20px;
+            font-size: 19px;
             font-family: Arial;
-            color: navy;
+            color: #36566D;
             text-align: center;
         }
 
@@ -68,6 +68,7 @@ const char htmlAbout[] PROGMEM = R"=====(
             border-left: 20px whitesmoke;
             background-color: rgb(226, 232, 236);
             overflow: hidden; /* Prevent content from overflowing */
+             position: relative; /* Relative positioning for absolute positioning */
         }
 
         #main {
@@ -78,6 +79,32 @@ const char htmlAbout[] PROGMEM = R"=====(
             border: 10px solid rgb(255, 255, 255);
         }
 
+.left-text {
+    display: flex;
+    align-items: center;
+}
+
+.text-and-image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.text-content {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.image-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+        .right-text{
+          padding-left: 50%;
+          box-sizing:border-box;
+        }
+
         #footer-div {
             width: 100%;
             min-height: 50px;
@@ -85,6 +112,7 @@ const char htmlAbout[] PROGMEM = R"=====(
             background-color: #173042;
             text-align: center;
             font-size: smaller;
+            
         }
 
         .LandOverview div {
@@ -105,7 +133,7 @@ const char htmlAbout[] PROGMEM = R"=====(
             position: fixed;
             height: 60px!important;
             overflow: hidden;
-            z-index: 10;
+            z-index: 20;
         }
 
         .navbar {
@@ -120,6 +148,8 @@ const char htmlAbout[] PROGMEM = R"=====(
             position: fixed;
             top: 0;
             left: 0;
+                z-index: 20; /* Set a higher z-index for the sidebar */
+
         }
 
         .navbar a {
@@ -164,6 +194,8 @@ const char htmlAbout[] PROGMEM = R"=====(
             transform: translateX(-250px);
             transition: transform 250ms ease-in-out;
             background: linear-gradient(186deg, #173042 32%, #ce7c7c 68%);
+                z-index: 20; /* Set a higher z-index for the sidebar */
+
         }
 
         .sidebarMenuInner {
@@ -282,11 +314,59 @@ const char htmlAbout[] PROGMEM = R"=====(
             margin-top: -9px;
         }
 
-       
+ .image-container {
+            position: relative;
+            width: 100%;
+            max-width: 2000px; /* Set maximum width for the image container */
+            max-height:2000px; /* Set maximum height for the image container */
+            overflow: hidden;
+            margin: 0 auto; /* Center the image container */
+                z-index: 10; /* Lower z-index for the image container */
+
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto; /* Ensure aspect ratio is maintained */
+            display: block;
+            margin: 0 auto; /* Center the image */
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+                @media only screen and (max-width: 500px) {
+            .text-overlay {
+                top: 80%; /* Adjusted position for smaller screens */
+            }
+            h1 {
+            font: bold;
+            font-size: 28px;
+            font-family: Arial;
+            color: #173042;
+            text-align: center;
+        }
+
+        p {
+            font-size: 11px;
+            font-family: Arial;
+            color: #36566D;
+            text-align: center;
+        }
+  }
+
 </style>
 </head>
 
-<body>
+<body><body>
   <div class="flex-Container">
       <div class="header"></div>
       <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">

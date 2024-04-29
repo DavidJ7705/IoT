@@ -4,10 +4,10 @@ const char htmlHEART[] PROGMEM = R"=====(
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="15">
+    <meta http-equiv="refresh" content="10">
     <title>Heart rate sensor PAGE FOR SERVER</title>
     <style>
- 
+
         *{
             margin: 0px;
             padding: 00px;
@@ -30,22 +30,33 @@ const char htmlHEART[] PROGMEM = R"=====(
 
         h1 {
             font: bold;
-            font-size: 35px;
+            font-size: 39px;
             font-family: Arial;
             color: #173042;
             text-align: center;
         }
 
         p {
-            font-size: 20px;
+            font-size: 24px;
             font-family: Arial;
             color: #36566D;
             text-align: center;
         }
-
-        th, td {
-            font-size: 25px;
+        th{
+            font: bold;
+            font-size: 34 px;
+            font-family: Arial;
             padding: 8px;
+            color: #173042;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            font-size: 29px;
+            font-family: Arial;
+            padding: 8px;
+            color: #36566D;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -326,10 +337,10 @@ String heart_homePagePart1 = F(R"=====(
   <div id="main" class="main_body">
             <div class="mainInner">
                 <div id="intro">
-                        <h1>HEART PAPE PAGE</h1>
+                        <h1>HEART-RATE</h1>
                         <br>
                     <div style="width: 50%; text-align: right;">
-                        <p>Welcome to the DHT11 Page! The DHT11 is a temperature and humidity sensor. Here, we can view values, in real-time!</p>
+                        <p>Welcome to the Heart-Rate page! The MAX30100 sensor, calculates Heart-Rate and also Blood Oxidation levels. Here, we can view values!</p>
                     </div>
                 </div>
             </div>
@@ -348,25 +359,25 @@ String heart_homePagePart1 = F(R"=====(
  
  <tr>
  
- <td>Temperature</td>
+ <td>Heart-Rate</td>
  
  <td>)=====");
 
  String heart_homePagePart2 = F(R"=====(</td>
  
- <td>Degree Cel</td>
+ <td>bpm</td>
  
  </tr>
  
  <tr>
  
- <td>Humidity</td>
+ <td>SpO2</td>
  
  <td>)=====");
 
 String heart_homePagePart3 = F(R"=====(</td>
  
- <td>L</td>
+ <td>%</td>
  
  </tr>
  
@@ -374,13 +385,10 @@ String heart_homePagePart3 = F(R"=====(</td>
  
  </div>
 
-    <div class="frame-container">
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=TEMPERATURE&type=spline"></iframe>
-        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2415187/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=15&title=HUMIDITY&type=spline"></iframe>
-    </div>
+
 
     <br/><br/><br/><br/><br/><br/><br/><br/>
-<div id="footer-div">© DHT11 </div>
+<div id="footer-div">© Max30100 </div>
 
 <script>
     function toggleFeatures() {

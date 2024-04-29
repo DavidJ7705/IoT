@@ -6,8 +6,8 @@ const char htmlDemos[] PROGMEM = R"=====(
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DEMOS PAGE FOR SERVER</title>
     <style>
-     
- *{
+
+        *{
             margin: 0px;
             padding: 00px;
             box-sizing: border-box;
@@ -29,22 +29,34 @@ const char htmlDemos[] PROGMEM = R"=====(
 
         h1 {
             font: bold;
-            font-size: 35px;
+            font-size: 39px;
             font-family: Arial;
-            color: navy;
+            color: #173042;
             text-align: center;
         }
 
         p {
-            font-size: 20px;
+            font-size: 24px;
             font-family: Arial;
-            color: navy;
+            color: #36566D;
             text-align: center;
         }
-
-        th, td {
-            font-size: 25px;
+        
+        th{
+            font: bold;
+            font-size: 34 px;
+            font-family: Arial;
             padding: 8px;
+            color: #173042;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            font-size: 29px;
+            font-family: Arial;
+            padding: 8px;
+            color: #36566D;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -74,7 +86,15 @@ const char htmlDemos[] PROGMEM = R"=====(
             margin-bottom: 10px;
             border: 10px solid rgb(255, 255, 255);
         }
+        .left-text{
+          padding-right: 50%;
+          box-sizing:border-box;
+        }
 
+        .right-text{
+          padding-left: 50%;
+          box-sizing:border-box;
+        }
         #footer-div {
             width: 100%;
             min-height: 50px;
@@ -82,6 +102,7 @@ const char htmlDemos[] PROGMEM = R"=====(
             background-color: #173042;
             text-align: center;
             font-size: smaller;
+            
         }
 
         .LandOverview div {
@@ -279,12 +300,46 @@ const char htmlDemos[] PROGMEM = R"=====(
             margin-top: -9px;
         }
 
-       
+        /*Video style stuff*/
+
+        .sensor-section{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+                      background-color: rgb(226, 232, 236);
+        }
+
+        .sensor-info{
+          flex: 1;
+          text-align: left;
+        }
+        .sensor-video{
+          flex: 1;
+        }
+
+@media( max-width:768px){
+
+          .sensor-section{
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .sensor-info{
+          width: 80%;
+          text-align: center;
+        }
+        .sensor-video{
+           width: 80%;
+        }
+
+}
+
+
 </style>
 </head>
 
 <body>
-  <div class="flex-Container">
       <div class="header"></div>
       <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
       <label for="openSidebarMenu" class="sidebarIconToggle">
@@ -301,24 +356,100 @@ const char htmlDemos[] PROGMEM = R"=====(
         <span id="featuresSubMenu" style="display: none;">
           <a href="/dht11" role="button">DHT11</a>
           <a href="/gps" role="button">GPS</a>
+          <a href="/heart" role="button">HEART</a>
+          <a href="/ultrasonic" role="button">ULTRASONICS</a>
         </span>
       </li>
     </ul>
   </div>
 
-  <br/><br/><br/><br/>
-  <h1> DEMOS PAGE</h1>
-  
-  <p>Hello! this is a test for webpage window demos, has sidebar with access to other pages</p>
+      <div class="flex-Container">
 
-    <br/><br/><br/><br/><br/><br/><br/><br/>
-<div id="footer-div">© DEMOS </div>
-<script>
-    function toggleFeatures() {
-      var subMenu = document.getElementById("featuresSubMenu");
-      subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
-    }
-  </script>
+  <div id="main" class="main_body">
+            <div class="mainInner">
+                <div id="intro">
+                        <h1>DEMOS PAGE</h1>
+                        <br>
+                    <div style="width: 50%; text-align: right;">
+                        <p>Welcome to the Demos Page! This page contains video demonstrations of the capabilities of the system. Explore different functionalities, and each component in action!</p>
+                    </div>
+                </div>
+            </div>
+  </div>
+  </div>
+<hr/>
+<br/>
+
+      <!-- DHT11 demo section -->
+<div class = "sensor-section">
+  <div class = "sensor-info">
+          <br/>
+
+    <h1>DHT11 Sensor</h1>
+      <br>
+          <p>The DHT11 is a Temperature and Humidity Sensor.</p>
+        </div>
+        <div class = "sensor-video">
+                <br/>
+
+<iframe src="https://drive.google.com/file/d/1QWedSAnO2AwUAYU_JylsX0blnaQpjpoa/preview" width="640" height="480" allow="autoplay"></iframe> </div>
+        </div>
+
+      <!-- GPS demo section -->
+<div class = "sensor-section">
+  <div class = "sensor-info">
+          <br/>
+
+    <h1>GPS</h1>
+      <br>
+          <p>The Ultimate GPS v3 is used to display current location of the vehicle.</p>
+        </div>
+        <div class = "sensor-video">
+                <br/>
+
+<iframe src="https://drive.google.com/file/d/1P62f9HvHfjXW6dQGRQEOUE7Kq8dCCtkW/preview" width="640" height="480" allow="autoplay"></iframe> </div>
+        </div>
+
+
+      <!-- Heart demo section -->
+<div class = "sensor-section">
+  <div class = "sensor-info">
+          <br/>
+
+    <h1>Heart-Rate Sensor</h1>
+      <br>
+          <p>The MAX30100 sensor calculates heart-rate in bpm and blood oxidation levels.</p>
+        </div>
+        <div class = "sensor-video">
+                <br/>
+
+<iframe src="https://drive.google.com/file/d/17kq_wvd1nZqX3v2UJvD5lEejEkEl5Rj-/preview" width="640" height="480" allow="autoplay"></iframe> </div>
+        </div>
+
+
+      <!-- Ultrsonic demo section -->
+<div class = "sensor-section">
+  <div class = "sensor-info">
+          <br/>
+
+    <h1>Ultrsonic Sensors</h1>
+      <br>
+          <p>Two HC-SR04 ultrasonic sensors are used. These simulate an object or vehicle coming close by the motorcycle.</p>
+        </div>
+        <div class = "sensor-video">
+                <br/>
+
+<iframe src="https://drive.google.com/file/d/1MaH1aD4FJLitNZsjwygjVwacaVbp5MdO/preview" width="640" height="480" allow="autoplay"></iframe> </div>
+        </div>
+
+    <div id="footer-div">© DEMOS </div>
+
+    <script>
+        function toggleFeatures() {
+            var subMenu = document.getElementById("featuresSubMenu");
+            subMenu.style.display = subMenu.style.display === "block" ? "none" : "block";
+        }
+    </script>
 </body>
 
 </html>
